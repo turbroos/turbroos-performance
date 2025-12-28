@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>turbroos performance</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="img/logo.png" alt="turbroos performance" />
+    </a>
+
+    <nav class="nav">
+      <a href="index.html" class="active" data-lang="nav_home">Home</a>
+      <a href="configurator.html" data-lang="nav_config">Konfigurator</a>
+      <a href="about.html" data-lang="nav_about">Über uns</a>
+      <a href="legal.html" data-lang="nav_legal">Rechtliches</a>
+    </nav>
+
+    <div class="lang-switch">
+      <button class="lang-btn" data-setlang="de" type="button" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" data-setlang="en" type="button" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-content container">
+      <h1 data-lang="home_headline">Mehr Leistung. Mehr Emotion.</h1>
+
+      <p class="muted" data-lang="home_subline">
+        Professionelles Chiptuning, maßgeschneiderte Software & spürbar mehr Fahrfreude – abgestimmt auf dein Fahrzeug und deinen Fahrstil.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn-primary" href="configurator.html" data-lang="home_cta1">Jetzt Leistung berechnen</a>
+        <a class="btn-ghost" href="about.html" data-lang="home_cta2">Mehr über uns</a>
+      </div>
+
+      <div class="home-gallery">
+        <img src="img/decor.png" alt="turbroos performance decor" />
+        <img src="img/hero-car.png" alt="turbroos performance hero car" />
+      </div>
+    </div>
+  </section>
+</main>
+
+<a href="https://wa.me/491234567890" class="whatsapp" target="_blank" rel="noopener" data-lang="whatsapp_btn">
+  WhatsApp
+</a>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>
+      <strong>turbroos performance</strong><br />
+      <span data-lang="footer_tag">Chiptuning & Softwareoptimierung</span>
+    </div>
+    <div class="footer-links">
+      <a href="legal.html" data-lang="nav_legal">Rechtliches</a>
+      <a href="about.html" data-lang="nav_about">Über uns</a>
+      <a href="configurator.html" data-lang="nav_config">Konfigurator</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/lang.js"></script>
+</body>
+</html>

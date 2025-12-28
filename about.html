@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-lang="about_h1">Über uns</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="img/logo.png" alt="turbroos performance" />
+    </a>
+
+    <nav class="nav">
+      <a href="index.html" data-lang="nav_home">Home</a>
+      <a href="configurator.html" data-lang="nav_config">Konfigurator</a>
+      <a href="about.html" class="active" data-lang="nav_about">Über uns</a>
+      <a href="legal.html" data-lang="nav_legal">Rechtliches</a>
+    </nav>
+
+    <div class="lang-switch">
+      <button class="lang-btn" data-setlang="de" type="button" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" data-setlang="en" type="button" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main class="container section">
+  <h1 class="page-title" data-lang="about_h1">Über uns</h1>
+
+  <p class="muted readable" data-lang="about_intro">
+    turbroos performance steht für individuelle Softwareoptimierung und professionelles Chiptuning.
+    Wir setzen bewusst auf saubere Kennfeldanpassungen statt pauschaler Standardlösungen.
+    Unser Anspruch ist es, Leistung, Fahrbarkeit und Standfestigkeit in Einklang zu bringen –
+    angepasst an dein Fahrzeug, deinen Fahrstil und den technischen Zustand.
+  </p>
+
+  <hr class="rule" />
+
+  <div class="card-grid">
+    <div class="card">
+      <h3 data-lang="about_card1_t">Individuelle Abstimmung</h3>
+      <p data-lang="about_card1_p">
+        Jedes Fahrzeug wird individuell betrachtet. Motorisierung, Softwarestand,
+        Laufleistung und vorhandene Hardware fließen direkt in die Optimierung ein.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 data-lang="about_card2_t">Transparente Richtwerte</h3>
+      <p data-lang="about_card2_p">
+        Die im Konfigurator dargestellten Leistungswerte dienen als unverbindliche Orientierung
+        und ersetzen keine individuelle Analyse oder Diagnose.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 data-lang="about_card3_t">Preis auf Anfrage</h3>
+      <p data-lang="about_card3_p">
+        Der Preis richtet sich nach Fahrzeugtyp, Motor, Softwareversion
+        und dem gewünschten Leistungsziel.
+      </p>
+    </div>
+  </div>
+
+  <div class="legal-block" style="margin-top:26px;">
+    <h2 data-lang="about_extra_h2">
+      Was passiert bei einer Kennfeldoptimierung?
+    </h2>
+
+    <p data-lang="about_extra_p1">
+      Bei einer Kennfeldoptimierung werden die Steuerparameter im Motorsteuergerät gezielt angepasst.
+      Dazu zählen unter anderem Drehmomentbegrenzungen, Ladedruckregelung,
+      Einspritzmenge sowie Schutz- und Sicherheitsfunktionen.
+    </p>
+
+    <p data-lang="about_extra_p2">
+      Ziel ist keine unrealistische Spitzenleistung, sondern eine harmonische Leistungsentfaltung,
+      besseres Ansprechverhalten und eine optimierte Kraftentfaltung im Alltag.
+      Thermische Reserven und Bauteilschutz stehen dabei immer im Fokus.
+    </p>
+
+    <p data-lang="about_extra_p3">
+      Jede Anpassung erfolgt unter Berücksichtigung der Serientoleranzen
+      sowie des individuellen Fahrzeugzustands – für eine langlebige und sichere Optimierung.
+    </p>
+
+    <hr class="rule" />
+
+    <h3 data-lang="about_process_h">
+      Ablauf einer professionellen Chiptuning-Optimierung
+    </h3>
+
+    <ul>
+      <li data-lang="about_process_1">
+        Analyse der Fahrzeugdaten (Motor, Getriebe, Softwarestand, Laufleistung).
+      </li>
+      <li data-lang="about_process_2">
+        Anpassung relevanter Kennfelder wie Drehmoment, Ladedruck,
+        Einspritzung und Schutzfunktionen.
+      </li>
+      <li data-lang="about_process_3">
+        Feinabstimmung für gleichmäßige Leistungsentfaltung
+        und maximale Alltagstauglichkeit.
+      </li>
+      <li data-lang="about_process_4">
+        Abschlussprüfung und Übergabe inklusive Nutzungshinweisen
+        und Empfehlungen zur Wartung.
+      </li>
+    </ul>
+  </div>
+</main>
+
+<a href="https://wa.me/491234567890" class="whatsapp" target="_blank" rel="noopener" data-lang="whatsapp_btn">
+  WhatsApp
+</a>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div>
+      <strong>turbroos performance</strong><br />
+      <span data-lang="footer_tag">Chiptuning & Softwareoptimierung</span>
+    </div>
+    <div class="footer-links">
+      <a href="legal.html" data-lang="nav_legal">Rechtliches</a>
+      <a href="about.html" data-lang="nav_about">Über uns</a>
+      <a href="configurator.html" data-lang="nav_config">Konfigurator</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/lang.js"></script>
+</body>
+</html>

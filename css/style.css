@@ -687,3 +687,68 @@ body.page-configurator .ecu-frame {
   }
 }
 
+/* =====================================================
+   FINAL MOBILE FIX – ECU KONFIGURATOR (ABSCHNEIDEN + DIAGRAMME)
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  /* Frame darf NICHT abschneiden */
+  body.page-configurator .ecu-frame {
+    overflow: visible !important;
+    padding: 14px;
+  }
+
+  /* Scroll-Container für externes Tool */
+  body.page-configurator #ecuCalculateTool {
+    width: 100%;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Tool ist Desktop-only → echte Mindestbreite */
+  body.page-configurator #ecuCalculateTool > * {
+    min-width: 1100px;
+  }
+
+  /* GANZ WICHTIG: Diagramme dürfen nicht begrenzt werden */
+  body.page-configurator #ecuCalculateTool canvas,
+  body.page-configurator #ecuCalculateTool svg {
+    display: block !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+}
+
+/* =====================================================
+   MOBILE FEINSCHLIFF – NICHT GEQUETSCHT
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .header-inner {
+    padding: 12px 14px;
+  }
+
+  .nav {
+    gap: 10px;
+  }
+
+  .section {
+    padding: 42px 0;
+  }
+
+  h1 {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+}
+

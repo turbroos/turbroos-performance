@@ -9,8 +9,8 @@
   --text: #ffffff;
   --muted: rgba(255,255,255,0.76);
   --red: #8b0000;
-  --soft: rgba(255,255,255,0.88);   /* sanfter als weiß */
-  --soft2: rgba(255,255,255,0.80);  /* noch sanfter */
+  --soft: rgba(255,255,255,0.88);
+  --soft2: rgba(255,255,255,0.80);
 }
 
 html, body {
@@ -25,11 +25,9 @@ html, body {
 a { color: inherit; text-decoration: none; }
 
 /* ================= SMOOTH FEEL (A: sehr dezent) ================= */
-/* sanftes Einblenden beim Laden (CSS-only Seitenwechsel: Fade-In) */
 main { animation: pageFade 220ms ease-out both; }
 @keyframes pageFade { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: translateY(0);} }
 
-/* dezente Interaktionen */
 .nav a,
 .lang-btn,
 .btn-primary,
@@ -58,8 +56,6 @@ main { animation: pageFade 220ms ease-out both; }
 }
 
 .section { padding: 64px 0; }
-
-/* “muted” bleibt weich (nicht grau-wegdriften) */
 .muted { color: var(--soft2); }
 
 /* ================= HEADER ================= */
@@ -102,9 +98,11 @@ main { animation: pageFade 220ms ease-out both; }
   background: rgba(255,255,255,0.06);
 }
 
-.nav a.active {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
+.nav a.active,
+.nav a[aria-current="page"] {
+  background: rgba(139, 0, 0, 0.25);
+  border: 1px solid rgba(139, 0, 0, 0.55);
+  color: #ffffff !important;
 }
 
 /* ================= LANGUAGE ================= */
@@ -159,7 +157,6 @@ main { animation: pageFade 220ms ease-out both; }
 }
 
 /* ================= HOME – BILDER BESSER INTEGRIERT ================= */
-/* (nur Integration + leichtes Float, keine Layout-Umkrempelung) */
 .home-gallery {
   margin-top: 26px;
   display: grid;
@@ -170,7 +167,7 @@ main { animation: pageFade 220ms ease-out both; }
 
 .home-gallery img {
   width: 100%;
-  height: 280px;               /* kleiner als vorher */
+  height: 280px;
   object-fit: cover;
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.10);
@@ -224,12 +221,12 @@ main { animation: pageFade 220ms ease-out both; }
 .legal-hint { color: var(--soft2); font-size: 13px; margin-top: 10px; }
 
 /* ================= KONFIGURATOR ================= */
-/* bleibt gleich – nur Schrift etwas softer (nicht knallweiß) */
 body.page-configurator {
   background: var(--bg);
   color: var(--soft);
 }
 
+/* Seite nicht “knallweiß” */
 body.page-configurator h1,
 body.page-configurator p,
 body.page-configurator .cta-note,
@@ -246,6 +243,7 @@ body.page-configurator .footer strong {
   justify-content: center;
 }
 
+/* WICHTIG: KEIN overflow:hidden mehr -> sonst verschwinden Charts */
 .ecu-frame {
   width: 100%;
   max-width: 1100px;
@@ -254,25 +252,29 @@ body.page-configurator .footer strong {
   background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
   border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 0 70px rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
+  display: block;
+  overflow: visible; /* <- Charts dürfen sichtbar bleiben */
 }
 
 #ecuCalculateTool {
   width: 100%;
   max-width: 1000px;
+  margin: 0 auto;
 }
 
-/* ECU Widget Text ebenfalls softer (nicht grell) */
+/* ECU Widget Text softer */
 body.page-configurator #ecuCalculateTool,
 body.page-configurator #ecuCalculateTool * {
   color: var(--soft) !important;
 }
 
-/* ================= ABOUT / LEGAL – klare Linie (nur Design, kein Layoutbruch) */
-.page-title {
-  margin: 0 0 10px;
+/* CLS “Zucken” reduzieren: Platz reservieren, aber NICHT zu groß */
+body.page-configurator #ecuCalculateTool {
+  min-height: 260px; /* stabiler Start */
 }
+
+/* ================= ABOUT / LEGAL ================= */
+.page-title { margin: 0 0 10px; }
 
 .rule {
   height: 1px;
@@ -296,15 +298,8 @@ body.page-configurator #ecuCalculateTool * {
   text-align: left;
 }
 
-.legal-block h2, .legal-block h3 {
-  margin: 0 0 10px;
-}
-
-.legal-block p, .legal-block li {
-  color: var(--soft);
-  line-height: 1.7;
-}
-
+.legal-block h2, .legal-block h3 { margin: 0 0 10px; }
+.legal-block p, .legal-block li { color: var(--soft); line-height: 1.7; }
 .legal-block ul { padding-left: 18px; margin: 10px 0 0; }
 
 /* ================= FOOTER ================= */
@@ -326,6 +321,32 @@ body.page-configurator #ecuCalculateTool * {
 
 .footer a { color: var(--soft); }
 
+.footer-links a {
+  position: relative;
+  padding: 0 6px;
+  color: var(--soft) !important;
+  text-decoration: none !important;
+}
+
+.footer-links a:not(:last-child)::after {
+  content: "·";
+  margin-left: 8px;
+  color: #777;
+}
+
+.footer-links a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 1px;
+  background: #8b0000;
+  transition: width 0.25s ease;
+}
+
+.footer-links a:hover::before { width: 100%; }
+
 /* ================= WHATSAPP FLOAT ================= */
 .whatsapp {
   position: fixed;
@@ -337,6 +358,7 @@ body.page-configurator #ecuCalculateTool * {
   padding: 16px 22px;
   border-radius: 18px;
   box-shadow: 0 0 38px rgba(0,0,0,0.6);
+  z-index: 60;
 }
 
 /* ================= MOBILE ================= */
@@ -346,409 +368,78 @@ body.page-configurator #ecuCalculateTool * {
 }
 
 @media (max-width: 820px) {
-  .nav { flex-wrap: wrap; gap: 12px; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
   .card-grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* ========= SMARTPHONE FEINSCHLIFF (ohne Desktop kaputt zu machen) ========= */
+@media (max-width: 640px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  /* NAV nicht umbrechen -> horizontal scroll statt gequetscht */
+  .nav {
+    width: 100%;
+    gap: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav a {
+    flex: 0 0 auto;
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+
+  .lang-switch { margin-left: auto; }
+
+  .section { padding: 42px 0; }
+
+  /* Buttons auf Home etwas kompakter */
+  .btn-primary, .btn-ghost {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  /* WhatsApp weniger im Weg */
+  .whatsapp {
+    right: 14px;
+    bottom: 14px;
+    padding: 14px 18px;
+    border-radius: 16px;
+  }
+
+  /* KONFIGURATOR: NICHT abschneiden -> horizontal scroll im Frame */
+  body.page-configurator .ecu-frame {
+    padding: 18px;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Widget darf breiter sein als Screen -> du kannst seitlich scrollen */
+  body.page-configurator #ecuCalculateTool {
+    min-width: 1000px; /* Tool arbeitet intern oft mit ~1000px Layout */
+    max-width: none;
+  }
 }
 
 /* =====================================================
    FIX: ECU SCRIPT ÜBERSCHREIBT CTA-BUTTON (FINAL)
    ===================================================== */
-
-/* erzwingt dauerhaft CI-Rot nach Script-Ladevorgang */
 body.page-configurator .cta-box a.btn-primary {
   background-color: #8b0000 !important;
   color: #ffffff !important;
   box-shadow: 0 0 32px rgba(139,0,0,0,0.45) !important;
 }
-
-/* verhindert blaues Hover aus Fremd-Scripts */
 body.page-configurator .cta-box a.btn-primary:hover,
 body.page-configurator .cta-box a.btn-primary:focus,
 body.page-configurator .cta-box a.btn-primary:active {
   background-color: #8b0000 !important;
   color: #ffffff !important;
 }
-
-/* =====================================================
-   FIX: KONFIGURATOR-ZUCKEN BEIM LADEN (CLS FIX)
-   ===================================================== */
-
-/* reserviert Platz, bevor das ECU-Script rendert */
-body.page-configurator #ecuCalculateTool {
-  min-height: 420px; /* stabilisiert erstes Rendern */
-}
-
-/* verhindert sichtbare Resize-Effekte im Frame */
-body.page-configurator .ecu-frame {
-  overflow: hidden;
-}
-
-/* =====================================================
-   FINAL FIX: KEIN ZUCKEN AUF KONFIGURATOR-SEITE
-   ===================================================== */
-
-/* verhindert Reflow + Animation-Konflikt mit ECU-Script */
-body.page-configurator main {
-  animation: none !important;
-}
-
-/* =====================================================
-   FIX: KONFIGURATOR-FRAME ANFANGS ZU HOCH
-   ===================================================== */
-
-/* kleinere Start-Höhe – wächst mit Inhalt */
-body.page-configurator #ecuCalculateTool {
-  min-height: 220px; /* vorher zu groß */
-}
-
-/* Frame passt sich ruhig an */
-body.page-configurator .ecu-frame {
-  overflow: hidden;
-}
-
-/* =====================================================
-   FIX: NAVIGATION ACTIVE STATE EINHEITLICH
-   ===================================================== */
-
-/* Basis: kein Blau mehr */
-.nav a {
-  color: #ffffff !important;
-}
-
-/* aktiver Reiter – immer dunkelrot */
-.nav a.active,
-.nav a[aria-current="page"] {
-  background: rgba(139, 0, 0, 0.25) !important;
-  border: 1px solid rgba(139, 0, 0, 0.55) !important;
-  color: #ffffff !important;
-}
-
-/* Hover bleibt neutral */
-.nav a:hover {
-  background: rgba(255,255,255,0.08);
-}
-
-/* =====================================================
-   FOOTER – EINHEITLICH & FINAL
-   ===================================================== */
-
-.footer {
-  background: linear-gradient(180deg, #060606, #000);
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 22px 0;
-  color: #e6e6e6;
-  font-size: 14px;
-}
-
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-/* LEFT SIDE */
-.footer strong {
-  display: block;
-  font-size: 15px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 2px;
-}
-
-.footer span {
-  font-style: italic;
-  font-size: 13px;
-  color: #b5b5b5;
-  letter-spacing: 0.3px;
-}
-
-/* RIGHT SIDE LINKS */
-.footer-links {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
-.footer-links a {
-  color: #e6e6e6;
-  text-decoration: none;
-  font-size: 14px;
-  position: relative;
-  padding: 0 6px;
-}
-
-/* DOT SEPARATOR */
-.footer-links a:not(:last-child)::after {
-  content: "·";
-  margin-left: 8px;
-  color: #777;
-}
-
-/* HOVER EFFECT */
-.footer-links a::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 0;
-  height: 1px;
-  background: #8b0000;
-  transition: width 0.25s ease;
-}
-
-.footer-links a:hover::before {
-  width: 100%;
-}
-
-/* ACTIVE LINK */
-.footer-links a.active {
-  color: #8b0000;
-}
-
-/* RESPONSIVE */
-@media (max-width: 700px) {
-  .footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footer-links {
-    margin-top: 8px;
-  }
-}
-
-/* =====================================================
-   FOOTER – EINHEITLICH, ELEGANT, KONFIGURATOR-FIX
-   ===================================================== */
-
-.footer {
-  background: linear-gradient(180deg, #060606, #000);
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 22px 0;
-  color: #e6e6e6;
-  font-size: 14px;
-}
-
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-/* ---------- LEFT ---------- */
-.footer strong {
-  display: block;
-  font-size: 15px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 0;            /* näher zusammen */
-}
-
-.footer span {
-  display: block;              /* IMMER sichtbar */
-  margin-top: 1px;             /* näher unter Logo */
-  font-size: 13px;
-  font-style: oblique 6deg;    /* eleganter als italic */
-  letter-spacing: 0.4px;
-  color: #b8b8b8;
-}
-
-/* ---------- RIGHT LINKS ---------- */
-.footer-links {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
-.footer-links a {
-  color: #e6e6e6 !important;
-  text-decoration: none !important;
-  font-size: 14px;
-  position: relative;
-  padding: 0 6px;
-}
-
-/* DOTS */
-.footer-links a:not(:last-child)::after {
-  content: "·";
-  margin-left: 8px;
-  color: #777;
-}
-
-/* ROTER HOVER – ÜBERSCHREIBT ALLES */
-.footer-links a::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 0;
-  height: 1px;
-  background: #8b0000;
-  transition: width 0.25s ease;
-}
-
-.footer-links a:hover::before {
-  width: 100%;
-}
-
-/* ACTIVE LINK */
-.footer-links a.active {
-  color: #8b0000 !important;
-}
-
-/* ---------- MOBILE ---------- */
-@media (max-width: 700px) {
-  .footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footer-links {
-    margin-top: 6px;
-  }
-}
-
-/* =====================================================
-   MOBILE FIX – KONFIGURATOR BEDIENBAR (OHNE DESKTOP-BRUCH)
-   ===================================================== */
-
-@media (max-width: 768px) {
-
-  /* Container darf nicht abschneiden */
-  body.page-configurator .ecu-wrapper {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  body.page-configurator .ecu-frame {
-    padding: 16px;
-    overflow: visible; /* wichtig */
-  }
-
-  /* Externes ECU-Tool: scrollbar statt gequetscht */
-  body.page-configurator #ecuCalculateTool {
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Tool ist intern für Desktop → Mindestbreite erzwingen */
-  body.page-configurator #ecuCalculateTool > * {
-    min-width: 1024px;
-  }
-
-  /* verhindert, dass Diagramme verschwinden */
-  body.page-configurator #ecuCalculateTool canvas,
-  body.page-configurator #ecuCalculateTool svg {
-    max-width: none !important;
-  }
-
-}
-
-/* =====================================================
-   MOBILE FEINSCHLIFF – HEADER & SPACING (SANFT)
-   ===================================================== */
-
-@media (max-width: 768px) {
-
-  .header-inner {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .nav {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .nav a {
-    width: 100%;
-    text-align: center;
-  }
-
-}
-
-/* =====================================================
-   MOBILE – WHATSAPP BUTTON NICHT IM WEG
-   ===================================================== */
-
-@media (max-width: 768px) {
-  .whatsapp {
-    right: 14px;
-    bottom: 14px;
-    padding: 14px 18px;
-    font-size: 14px;
-  }
-}
-
-/* =====================================================
-   FINAL MOBILE FIX – ECU KONFIGURATOR (ABSCHNEIDEN + DIAGRAMME)
-   ===================================================== */
-
-@media (max-width: 768px) {
-
-  /* Frame darf NICHT abschneiden */
-  body.page-configurator .ecu-frame {
-    overflow: visible !important;
-    padding: 14px;
-  }
-
-  /* Scroll-Container für externes Tool */
-  body.page-configurator #ecuCalculateTool {
-    width: 100%;
-    overflow-x: auto !important;
-    overflow-y: visible !important;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Tool ist Desktop-only → echte Mindestbreite */
-  body.page-configurator #ecuCalculateTool > * {
-    min-width: 1100px;
-  }
-
-  /* GANZ WICHTIG: Diagramme dürfen nicht begrenzt werden */
-  body.page-configurator #ecuCalculateTool canvas,
-  body.page-configurator #ecuCalculateTool svg {
-    display: block !important;
-    max-width: none !important;
-    height: auto !important;
-  }
-
-}
-
-/* =====================================================
-   MOBILE FEINSCHLIFF – NICHT GEQUETSCHT
-   ===================================================== */
-
-@media (max-width: 768px) {
-
-  .header-inner {
-    padding: 12px 14px;
-  }
-
-  .nav {
-    gap: 10px;
-  }
-
-  .section {
-    padding: 42px 0;
-  }
-
-  h1 {
-    font-size: 30px;
-    line-height: 1.2;
-  }
-
-  p {
-    font-size: 15px;
-    line-height: 1.6;
-  }
-
-}
-

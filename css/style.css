@@ -443,3 +443,11 @@ body.page-configurator .cta-box a.btn-primary:active {
   background-color: #8b0000 !important;
   color: #ffffff !important;
 }
+
+/* =====================================================
+   SPRACHUMSCHALTUNG DEAKTIVIERT – UI FIX
+   ===================================================== */
+
+.lang-switch {
+  display: none !important;
+}

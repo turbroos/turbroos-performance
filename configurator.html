@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-lang="config_title">Fahrzeug-Konfigurator</title>
+  <title>Fahrzeug-Konfigurator</title>
 
+  <!-- dein bestehendes CSS -->
   <link rel="stylesheet" href="css/style.css" />
+  <!-- nur für den Konfigurator (neu) -->
+  <link rel="stylesheet" href="css/configurator.css" />
 </head>
 
 <body class="page-configurator">
@@ -16,42 +19,159 @@
     </a>
 
     <nav class="nav">
-      <a href="index.html" data-lang="nav_home">Home</a>
-      <a href="configurator.html" class="active" aria-current="page" data-lang="nav_config">Konfigurator</a>
-      <a href="about.html" data-lang="nav_about">Über uns</a>
-      <a href="legal.html" data-lang="nav_legal">Rechtliches</a>
+      <a href="index.html">Home</a>
+      <a href="configurator.html" class="active" aria-current="page">Konfigurator</a>
+      <a href="about.html">Über uns</a>
+      <a href="legal.html">Rechtliches</a>
     </nav>
 
-    <div class="lang-switch">
-      <button class="lang-btn" data-setlang="de" type="button" onclick="setLang('de')">DE</button>
-      <button class="lang-btn" data-setlang="en" type="button" onclick="setLang('en')">EN</button>
+    <!-- Wenn du die Buttons behalten willst: ok.
+         (Die Sprach-Logik ist hier absichtlich NICHT drin, weil du später sagtest, du willst das nicht mehr.)
+         Du kannst diesen Block auch komplett löschen. -->
+    <div class="lang-switch" aria-hidden="true" style="opacity:.0; pointer-events:none;">
+      <button class="lang-btn" type="button">DE</button>
+      <button class="lang-btn" type="button">EN</button>
     </div>
   </div>
 </header>
 
-<main class="container section">
-  <h1 class="page-title" data-lang="config_h1">Fahrzeug-Konfigurator</h1>
-  <p class="muted readable" data-lang="config_intro">
-    Wähle Marke, Plattform und Motorisierung. Alle Werte sind unverbindliche Richtwerte.
+<main class="container section config-page">
+  <h1 class="page-title">Fahrzeug-Konfigurator</h1>
+  <p class="muted readable">
+    Wähle Marke, Modell, Generation/Baujahr und Motorisierung. Alle Werte sind unverbindliche Richtwerte.
   </p>
 
-  <div class="ecu-wrapper">
-    <div class="ecu-frame">
-      <!-- ECU Tool Container -->
-      <div id="ecuCalculateTool"></div>
-    </div>
-  </div>
+  <div class="cfg-shell">
+    <div class="cfg-controls">
+      <div class="cfg-row">
+        <label class="cfg-field">
+          <span>Marke</span>
+          <select id="selBrand">
+            <option value="">Bitte wählen…</option>
+          </select>
+        </label>
 
-  <div class="cta-box">
-    <a class="btn-primary" href="https://wa.me/491234567890" target="_blank" rel="noopener" data-lang="config_cta">
-      Anfrage per WhatsApp
-    </a>
-    <div class="cta-note" data-lang="config_note">Individuelle Softwareanpassung – keine Pauschalsoftware.</div>
-    <div class="legal-hint" data-lang="config_hint">* Alle Werte sind unverbindliche Richtwerte. Stage 2 nur auf Anfrage.</div>
+        <label class="cfg-field">
+          <span>Modell</span>
+          <select id="selModel" disabled>
+            <option value="">Bitte wählen…</option>
+          </select>
+        </label>
+
+        <label class="cfg-field">
+          <span>Generation / Baujahr</span>
+          <select id="selGen" disabled>
+            <option value="">Bitte wählen…</option>
+          </select>
+        </label>
+
+        <label class="cfg-field">
+          <span>Motorisierung</span>
+          <select id="selEngine" disabled>
+            <option value="">Bitte wählen…</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="cfg-hint">
+        <span class="dot"></span>
+        <span>Der Ergebnisbereich bleibt geschlossen, bis alle Felder gewählt wurden.</span>
+      </div>
+    </div>
+
+    <!-- Ergebnisbereich (startet zugeklappt & leer) -->
+    <section id="resultPanel" class="result-panel" aria-hidden="true">
+      <div class="result-head">
+        <div class="result-title">
+          <div class="badge">Chiptuning-Berechnungstool</div>
+          <h2 id="vehicleTitle">—</h2>
+          <p id="vehicleSub" class="muted">—</p>
+        </div>
+
+        <a class="btn-primary result-cta" href="https://wa.me/491234567890" target="_blank" rel="noopener">
+          Anfrage per WhatsApp
+        </a>
+      </div>
+
+      <div class="result-grid">
+        <!-- Leistungsboxen (animiert nacheinander) -->
+        <div class="metric-stack">
+          <div class="metric-row">
+            <div class="metric-label">Leistung (PS)</div>
+            <div class="metric-cards">
+              <div class="mcard" data-anim="1">
+                <div class="mcap">Serie</div>
+                <div class="mval"><span id="psStd">—</span><small>PS</small></div>
+              </div>
+              <div class="mcard" data-anim="2">
+                <div class="mcap">Stage 1</div>
+                <div class="mval"><span id="psStg">—</span><small>PS</small></div>
+              </div>
+              <div class="mcard" data-anim="3">
+                <div class="mcap">Differenz</div>
+                <div class="mval diff"><span id="psDiff">—</span><small>PS</small></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="metric-row">
+            <div class="metric-label">Drehmoment (Nm)</div>
+            <div class="metric-cards">
+              <div class="mcard" data-anim="4">
+                <div class="mcap">Serie</div>
+                <div class="mval"><span id="nmStd">—</span><small>Nm</small></div>
+              </div>
+              <div class="mcard" data-anim="5">
+                <div class="mcap">Stage 1</div>
+                <div class="mval"><span id="nmStg">—</span><small>Nm</small></div>
+              </div>
+              <div class="mcard" data-anim="6">
+                <div class="mcap">Differenz</div>
+                <div class="mval diff"><span id="nmDiff">—</span><small>Nm</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Diagramm -->
+        <div class="chart-card" data-anim="7">
+          <div class="chart-top">
+            <div class="chart-title">Leistungsdiagramm (Serie vs Stage 1)</div>
+            <div class="chart-legend">
+              <span class="lg lg-ps-std">Serie PS</span>
+              <span class="lg lg-ps-stg">Stage 1 PS</span>
+              <span class="lg lg-nm-std">Serie Nm</span>
+              <span class="lg lg-nm-stg">Stage 1 Nm</span>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="perfChart" width="980" height="420" aria-label="Leistungsdiagramm"></canvas>
+          </div>
+        </div>
+
+        <!-- Spezifikationen -->
+        <div class="spec-card" data-anim="8">
+          <div class="spec-title">Motor-Daten</div>
+          <div class="spec-grid">
+            <div class="spec-item"><span>Kraftstoff</span><strong id="spFuel">—</strong></div>
+            <div class="spec-item"><span>Methode</span><strong id="spMethod">—</strong></div>
+            <div class="spec-item"><span>Typ</span><strong id="spType">—</strong></div>
+            <div class="spec-item"><span>Hubraum</span><strong id="spDisp">—</strong></div>
+            <div class="spec-item"><span>ECU</span><strong id="spEcu">—</strong></div>
+            <div class="spec-item"><span>Motorkennbuchst.</span><strong id="spEngineCode">—</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-foot">
+        <div class="cta-note">Individuelle Softwareanpassung – keine Pauschalsoftware.</div>
+        <div class="legal-hint">* Alle Werte sind unverbindliche Richtwerte. Stage 2 nur auf Anfrage.</div>
+      </div>
+    </section>
   </div>
 </main>
 
-<a href="https://wa.me/491234567890" class="whatsapp" target="_blank" rel="noopener" data-lang="whatsapp_btn">
+<a href="https://wa.me/491234567890" class="whatsapp" target="_blank" rel="noopener">
   WhatsApp
 </a>
 
@@ -59,39 +179,16 @@
   <div class="container footer-inner">
     <div>
       <strong>turbroos performance</strong><br />
-      <span data-lang="footer_tag">Chiptuning & Softwareoptimierung</span>
+      <span>Chiptuning &amp; Softwareoptimierung</span>
     </div>
     <div class="footer-links">
-      <a href="legal.html" data-lang="nav_legal">Rechtliches</a>
-      <a href="about.html" data-lang="nav_about">Über uns</a>
-      <a href="configurator.html" data-lang="nav_config">Konfigurator</a>
+      <a href="legal.html">Rechtliches</a>
+      <a href="about.html">Über uns</a>
+      <a href="configurator.html" class="active">Konfigurator</a>
     </div>
   </div>
 </footer>
 
-<!-- ECU Script: responsive width (wichtig für Mobile) -->
-<script>
-  (function () {
-    var w = Math.max(320, Math.min(1000, window.innerWidth - 36)); // Mobile safe
-    window.$ecu = {
-      lang: "de",
-      width: String(w),
-      BackgroundColor: "#111212",
-      BoxColor: "#000000",
-      FontColor: "#ad0202",
-      ButtonColor: "#870101",
-      ButtonFontColor: "#cccaca",
-      APIID: ""
-    };
-
-    var d = document;
-    var s = d.createElement("script");
-    s.src = "https://xremover.net/calculator/ecuob.js?_=" + new Date().getTime();
-    s.async = true;
-    d.body.appendChild(s);
-  })();
-</script>
-
-<script src="js/lang.js"></script>
+<script src="js/configurator.js"></script>
 </body>
 </html>

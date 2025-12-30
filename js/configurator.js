@@ -29,7 +29,7 @@
               type: "Stage 1",
               displacement: "1968 ccm",
               ecu: "Bosch EDC17",
-              engineCode: "CXXX (Beispiel)"
+              engineCode: "CFF"
             }
           }
         }
@@ -425,4 +425,5 @@
 
   document.addEventListener("DOMContentLoaded", init);
 })();
+
 

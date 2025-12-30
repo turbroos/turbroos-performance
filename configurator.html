@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fahrzeug-Konfigurator</title>
 
-  <!-- dein bestehendes CSS -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- nur für den Konfigurator (neu) -->
   <link rel="stylesheet" href="css/configurator.css" />
 </head>
 
@@ -25,10 +23,7 @@
       <a href="legal.html">Rechtliches</a>
     </nav>
 
-    <!-- Wenn du die Buttons behalten willst: ok.
-         (Die Sprach-Logik ist hier absichtlich NICHT drin, weil du später sagtest, du willst das nicht mehr.)
-         Du kannst diesen Block auch komplett löschen. -->
-    <div class="lang-switch" aria-hidden="true" style="opacity:.0; pointer-events:none;">
+    <div class="lang-switch" aria-hidden="true" style="opacity:0; pointer-events:none;">
       <button class="lang-btn" type="button">DE</button>
       <button class="lang-btn" type="button">EN</button>
     </div>
@@ -72,14 +67,15 @@
           </select>
         </label>
       </div>
+    </div>
 
-    <!-- Ergebnisbereich (startet zugeklappt & leer) -->
+    <!-- Ergebnis -->
     <section id="resultPanel" class="result-panel" aria-hidden="true">
       <div class="result-head">
         <div class="result-title">
           <div class="badge">Chiptuning-Berechnungstool</div>
           <h2 id="vehicleTitle">—</h2>
-          <p id="vehicleSub" class="muted">—</p>
+          <p id="vehicleSub" class="muted"></p>
         </div>
 
         <a class="btn-primary result-cta" href="https://wa.me/491234567890" target="_blank" rel="noopener">
@@ -88,7 +84,6 @@
       </div>
 
       <div class="result-grid">
-        <!-- Leistungsboxen (animiert nacheinander) -->
         <div class="metric-stack">
           <div class="metric-row">
             <div class="metric-label">Leistung (PS)</div>
@@ -127,7 +122,6 @@
           </div>
         </div>
 
-        <!-- Diagramm -->
         <div class="chart-card" data-anim="7">
           <div class="chart-top">
             <div class="chart-title">Leistungsdiagramm (Serie vs Stage 1)</div>
@@ -139,11 +133,10 @@
             </div>
           </div>
           <div class="chart-wrap">
-            <canvas id="perfChart" width="980" height="420" aria-label="Leistungsdiagramm"></canvas>
+            <canvas id="perfChart" width="980" height="420"></canvas>
           </div>
         </div>
 
-        <!-- Spezifikationen -->
         <div class="spec-card" data-anim="8">
           <div class="spec-title">Motor-Daten</div>
           <div class="spec-grid">
@@ -165,26 +158,14 @@
   </div>
 </main>
 
-<a href="https://wa.me/491234567890" class="whatsapp" target="_blank" rel="noopener">
-  WhatsApp
-</a>
+<a href="https://wa.me/491234567890" class="whatsapp" target="_blank" rel="noopener">WhatsApp</a>
 
 <footer class="footer">
   <div class="container footer-inner">
-    <div>
-      <strong>turbroos performance</strong><br />
-      <span>Chiptuning &amp; Softwareoptimierung</span>
-    </div>
-    <div class="footer-links">
-      <a href="legal.html">Rechtliches</a>
-      <a href="about.html">Über uns</a>
-      <a href="configurator.html" class="active">Konfigurator</a>
-    </div>
+    <strong>turbroos performance</strong>
   </div>
 </footer>
 
 <script src="./js/configurator.js"></script>
 </body>
 </html>
-
-

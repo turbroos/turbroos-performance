@@ -10,7 +10,6 @@
           "2.0 TDI CR 140 PS": {
             display: {
               title: "Audi A3 8P 2.0 TDI CR 140 PS",
-              sub: "Unverbindliche Richtwerte (Serie vs Stage 1)"
             },
             perf: {
               stdPS: 140,
@@ -426,3 +425,4 @@
 
   document.addEventListener("DOMContentLoaded", init);
 })();
+

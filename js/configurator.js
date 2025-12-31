@@ -3,6 +3,17 @@
      Test-Datenbank (Schritt A: 1 Fahrzeug)
      Struktur ist bereits so gebaut, dass wir später easy erweitern.
      ========================================================= */
+
+  const OPTION_DEFS = {
+  EGR_OFF:        "EGR OFF",
+  DPF_OFF:        "DPF OFF",
+  DTC_REMOVAL:    "DTC Removal",
+  START_STOP_OFF: "Start/Stop OFF",
+  FLAPS:          "Flaps",
+  VMAX:           "Vmax",
+  ADBLUE:         "AdBlue"
+};
+
   const DB = {
     "Audi": {
       "A3": {
@@ -425,5 +436,6 @@
 
   document.addEventListener("DOMContentLoaded", init);
 })();
+
 
 

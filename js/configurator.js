@@ -23,48 +23,156 @@
   /* =========================================================
      Test-Datenbank (aktuell 1 Fahrzeug)
      ========================================================= */
-  const DB = {
-    "Audi": {
-      "A3": {
-        "8P (2003–2012)": {
-          "2.0 TDI CR 140 PS": {
-            display: {
-              title: "Audi A3 8P 2.0 TDI CR 140 PS",
-              sub: "" // optional
-            },
-            perf: {
-              stdPS: 140,
-              stgPS: 180,
-              stdNm: 320,
-              stgNm: 400,
-              rpm: [800, 1000, 1200, 1400, 1600, 1800, 2000, 2300, 2600, 3000, 3400, 3800, 4200, 4600, 5000],
-              stdPSCurve: [20, 28, 40, 60, 78, 92, 105, 118, 128, 135, 138, 140, 138, 130, 110],
-              stgPSCurve: [24, 34, 50, 75, 98, 118, 135, 152, 165, 175, 179, 180, 176, 165, 140],
-              stdNmCurve: [140, 180, 240, 300, 320, 320, 320, 315, 310, 300, 285, 265, 240, 210, 170],
-              stgNmCurve: [160, 210, 280, 350, 400, 400, 400, 395, 385, 370, 350, 325, 290, 250, 200]
-            },
-            specs: {
-              fuel: "Diesel",
-              compression: "18.00 : 1",
-              type: "Stage 1",
-              displacement: "1968 ccm",
-              ecu: "Bosch EDC17",
-              engineCode: "CFF"
-            },
-            options: [
-              "EGR_OFF",
-              "DPF_OFF",
-              "DTC_REMOVAL",
-              "START_STOP_OFF",
-              "FLAPS",
-              "VMAX",
-              "ADBLUE"
-            ]
-          }
+
+const DB = {
+  "Audi": {
+    "A3": {
+      "8P (2003–2008)": {
+
+        /* =========================
+           BENZIN
+        ========================= */
+
+        "1.6 FSI 115 PS": {
+          display: { title: "Audi A3 1.6 FSI 115 PS" },
+          perf: {
+            stdPS: 115, stgPS: 125,
+            stdNm: 155, stgNm: 170,
+            rpm: [800,1000,1200,1400,1600,1800,2000,2300,2600,3000,3400,3800,4200,4600,5000],
+            stdPSCurve: [10,18,28,40,55,68,80,92,102,110,114,115,112,105,95],
+            stgPSCurve: [12,22,34,48,64,78,92,105,115,122,125,124,120,112,100],
+            stdNmCurve: [90,110,130,145,155,155,150,145,140,135,125,115,105,95,85],
+            stgNmCurve: [100,120,145,160,170,170,165,160,155,150,140,130,120,110,95]
+          },
+          specs: {
+            fuel: "Benzin",
+            compression: "12.0 : 1",
+            type: "Stage 1",
+            displacement: "1598 ccm",
+            ecu: "Bosch MED9.5.10",
+            engineCode: "BLF"
+          },
+          options: ["DTC_REMOVAL","DECAT","FLAPS","VMAX"]
+        },
+
+        "1.8 TFSI 160 PS": {
+          display: { title: "Audi A3 1.8 TFSI 160 PS" },
+          perf: {
+            stdPS: 160, stgPS: 210,
+            stdNm: 250, stgNm: 340,
+            rpm: [800,1000,1200,1400,1600,1800,2000,2300,2600,3000,3400,3800,4200,4600,5000],
+            stdPSCurve: [15,25,40,60,85,110,130,145,155,160,158,155,148,138,120],
+            stgPSCurve: [20,35,60,90,125,155,175,190,200,210,208,202,190,170,145],
+            stdNmCurve: [140,180,220,250,250,250,245,240,235,230,215,195,175,150,120],
+            stgNmCurve: [170,220,280,330,340,340,335,330,320,310,295,270,240,200,160]
+          },
+          specs: {
+            fuel: "Benzin",
+            compression: "9.6 : 1",
+            type: "Stage 1",
+            displacement: "1798 ccm",
+            ecu: "Bosch MED17.5",
+            engineCode: "BZB"
+          },
+          options: ["DTC_REMOVAL","START_STOP_OFF","DECAT","FLAPS","VMAX","POP_BANG"]
+        },
+
+        "2.0 TFSI 200 PS": {
+          display: { title: "Audi A3 2.0 TFSI 200 PS" },
+          perf: {
+            stdPS: 200, stgPS: 250,
+            stdNm: 280, stgNm: 360,
+            rpm: [800,1000,1200,1400,1600,1800,2000,2300,2600,3000,3400,3800,4200,4600,5000],
+            stdPSCurve: [20,35,55,80,110,145,170,185,195,200,198,195,185,165,140],
+            stgPSCurve: [25,45,75,115,155,185,210,230,245,250,248,240,225,200,165],
+            stdNmCurve: [160,210,250,280,280,280,275,270,265,260,240,215,185,150,120],
+            stgNmCurve: [200,260,320,350,360,360,355,350,340,330,305,270,230,180,150]
+          },
+          specs: {
+            fuel: "Benzin",
+            compression: "10.5 : 1",
+            type: "Stage 1",
+            displacement: "1984 ccm",
+            ecu: "Bosch MED17.5",
+            engineCode: "BWA"
+          },
+          options: ["DTC_REMOVAL","START_STOP_OFF","DECAT","FLAPS","VMAX","POP_BANG","ANTILAG"]
+        },
+
+        "3.2 V6 250 PS": {
+          display: { title: "Audi A3 3.2 V6 250 PS" },
+          perf: {
+            stdPS: 250, stgPS: 265,
+            stdNm: 320, stgNm: 340,
+            rpm: [800,1000,1200,1400,1600,1800,2000,2300,2600,3000,3400,3800,4200,4600,5000],
+            stdPSCurve: [25,40,60,90,120,155,185,210,230,245,250,248,240,220,190],
+            stgPSCurve: [28,45,70,105,140,175,205,230,250,260,265,262,250,225,195],
+            stdNmCurve: [180,220,260,300,320,320,315,310,305,300,285,265,240,210,180],
+            stgNmCurve: [200,240,280,320,340,340,335,330,325,320,300,280,255,225,190]
+          },
+          specs: {
+            fuel: "Benzin",
+            compression: "11.3 : 1",
+            type: "Stage 1",
+            displacement: "3189 ccm",
+            ecu: "Bosch ME7.1.1",
+            engineCode: "BMJ"
+          },
+          options: ["DTC_REMOVAL","DECAT","FLAPS","VMAX","POP_BANG","ANTILAG"]
+        },
+
+        /* =========================
+           DIESEL
+        ========================= */
+
+        "1.9 TDI 105 PS": {
+          display: { title: "Audi A3 1.9 TDI 105 PS" },
+          perf: {
+            stdPS: 105, stgPS: 140,
+            stdNm: 250, stgNm: 340,
+            rpm: [800,1000,1200,1400,1600,1800,2000,2300,2600,3000,3400,3800,4200,4600,5000],
+            stdPSCurve: [10,18,30,45,65,80,92,100,105,103,98,90,80,65,50],
+            stgPSCurve: [15,28,45,70,95,115,130,138,140,138,130,115,95,75,55],
+            stdNmCurve: [160,200,230,250,250,250,245,240,230,220,200,180,155,130,105],
+            stgNmCurve: [190,240,300,330,340,340,335,330,315,300,270,230,190,155,125]
+          },
+          specs: {
+            fuel: "Diesel",
+            compression: "19.0 : 1",
+            type: "Stage 1",
+            displacement: "1896 ccm",
+            ecu: "Bosch EDC16U1",
+            engineCode: "BKC"
+          },
+          options: ["EGR_OFF","DPF_OFF","DTC_REMOVAL","FLAPS","VMAX","ADBLUE"]
+        },
+
+        "2.0 TDI 140 PS": {
+          display: { title: "Audi A3 2.0 TDI 140 PS" },
+          perf: {
+            stdPS: 140, stgPS: 180,
+            stdNm: 320, stgNm: 400,
+            rpm: [800,1000,1200,1400,1600,1800,2000,2300,2600,3000,3400,3800,4200,4600,5000],
+            stdPSCurve: [15,25,40,65,90,110,125,135,140,138,132,120,105,85,65],
+            stgPSCurve: [20,35,60,90,120,145,165,175,180,178,168,150,125,95,70],
+            stdNmCurve: [180,220,280,320,320,320,315,310,300,285,260,230,195,160,130],
+            stgNmCurve: [220,270,340,390,400,400,395,390,375,355,320,280,235,185,150]
+          },
+          specs: {
+            fuel: "Diesel",
+            compression: "18.0 : 1",
+            type: "Stage 1",
+            displacement: "1968 ccm",
+            ecu: "Bosch EDC16U34",
+            engineCode: "BMN"
+          },
+          options: ["EGR_OFF","DPF_OFF","DTC_REMOVAL","START_STOP_OFF","FLAPS","VMAX","ADBLUE"]
         }
+
       }
     }
-  };
+  }
+};
 
   /* =========================================================
      DOM – Felder

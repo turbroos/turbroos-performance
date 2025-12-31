@@ -1,3 +1,5 @@
+ich finde es nicht bitte ich sende dir den aktuellen code bitte ergänze genau das was wir eben besprochen haben lösche nicht von dem aktuellen stand ändern ergänze nur das was verbessert hast 
+
 (() => {
   /* =========================================================
      Test-Datenbank (Schritt A: 1 Fahrzeug)

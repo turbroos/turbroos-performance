@@ -5,14 +5,14 @@
      ========================================================= */
 
   const OPTION_DEFS = {
-  EGR_OFF:        "EGR OFF",
-  DPF_OFF:        "DPF OFF",
-  DTC_REMOVAL:    "DTC Removal",
-  START_STOP_OFF: "Start/Stop OFF",
-  FLAPS:          "Flaps",
-  VMAX:           "Vmax",
-  ADBLUE:         "AdBlue"
-};
+    EGR_OFF:        "EGR OFF",
+    DPF_OFF:        "DPF OFF",
+    DTC_REMOVAL:    "DTC Removal",
+    START_STOP_OFF: "Start/Stop OFF",
+    FLAPS:          "Flaps",
+    VMAX:           "Vmax",
+    ADBLUE:         "AdBlue"
+  };
 
   const DB = {
     "Audi": {
@@ -28,7 +28,6 @@
               stdNm: 320,
               stgNm: 400,
               rpm: [800, 1000, 1200, 1400, 1600, 1800, 2000, 2300, 2600, 3000, 3400, 3800, 4200, 4600, 5000],
-              // Kurven grob plausibel (PS steigt, Nm Plateau) – später je Fahrzeug genauer
               stdPSCurve: [20, 28, 40, 60, 78, 92, 105, 118, 128, 135, 138, 140, 138, 130, 110],
               stgPSCurve: [24, 34, 50, 75, 98, 118, 135, 152, 165, 175, 179, 180, 176, 165, 140],
               stdNmCurve: [140, 180, 240, 300, 320, 320, 320, 315, 310, 300, 285, 265, 240, 210, 170],
@@ -41,7 +40,16 @@
               displacement: "1968 ccm",
               ecu: "Bosch EDC17",
               engineCode: "CFF"
-            }
+            },
+            options: [
+              "EGR_OFF",
+              "DPF_OFF",
+              "DTC_REMOVAL",
+              "START_STOP_OFF",
+              "FLAPS",
+              "VMAX",
+              "ADBLUE"
+            ]
           }
         }
       }
@@ -74,6 +82,10 @@
   const spEcu = document.getElementById("spEcu");
   const spEngineCode = document.getElementById("spEngineCode");
 
+  // Zusatzoptionen
+  const optionCard = document.getElementById("optionCard");
+  const optionGrid = document.getElementById("optionGrid");
+
   const canvas = document.getElementById("perfChart");
   const ctx = canvas.getContext("2d", { alpha: true });
 
@@ -101,7 +113,6 @@
   function closePanel() {
     panel.classList.remove("is-open");
     panel.setAttribute("aria-hidden", "true");
-    // Stop running animation if any
     if (chartAnimRaf) cancelAnimationFrame(chartAnimRaf);
     chartAnimRaf = null;
     clearCanvas();
@@ -125,7 +136,7 @@
   }
 
   /* =========================================================
-     Chart rendering (animated)
+     Chart rendering (animated) – UNVERÄNDERT
      ========================================================= */
   function loadLogo() {
     return new Promise((resolve) => {
@@ -142,7 +153,6 @@
     const w = canvas.width;
     const h = canvas.height;
 
-    // center logo, keep aspect ratio
     const targetW = Math.min(w * 0.42, 360);
     const ratio = logoImg.width / logoImg.height;
     const targetH = targetW / ratio;
@@ -151,7 +161,7 @@
     const y = (h - targetH) / 2;
 
     ctx.save();
-    ctx.globalAlpha = 0.06; // sehr subtil
+    ctx.globalAlpha = 0.06;
     ctx.drawImage(logoImg, x, y, targetW, targetH);
     ctx.restore();
   }
@@ -190,7 +200,6 @@
     ctx.textAlign = "center";
     ctx.fillText("RPM", (x0 + x1) / 2, y1 + 34);
 
-    // left label (PS)
     ctx.save();
     ctx.translate(x0 - 34, (y0 + y1) / 2);
     ctx.rotate(-Math.PI / 2);
@@ -198,7 +207,6 @@
     ctx.fillText("Leistung (PS)", 0, 0);
     ctx.restore();
 
-    // right label (Nm)
     ctx.save();
     ctx.translate(x1 + 34, (y0 + y1) / 2);
     ctx.rotate(Math.PI / 2);
@@ -210,8 +218,7 @@
   }
 
   function drawLine(xs, ys, t, color, width = 2.5, dotEvery = 1) {
-    const n = xs.length;
-    const upto = Math.floor(lerp(1, n, t));
+    const upto = Math.floor(lerp(1, xs.length, t));
 
     ctx.save();
     ctx.strokeStyle = color;
@@ -221,14 +228,11 @@
 
     ctx.beginPath();
     for (let i = 0; i < upto; i++) {
-      const x = xs[i];
-      const y = ys[i];
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
+      if (i === 0) ctx.moveTo(xs[i], ys[i]);
+      else ctx.lineTo(xs[i], ys[i]);
     }
     ctx.stroke();
 
-    // dots
     ctx.fillStyle = color;
     for (let i = 0; i < upto; i += dotEvery) {
       ctx.beginPath();
@@ -246,7 +250,6 @@
     const w = canvas.width;
     const h = canvas.height;
 
-    // padding
     const padL = 64;
     const padR = 64;
     const padT = 28;
@@ -257,11 +260,9 @@
     const x1 = w - padR;
     const y1 = h - padB;
 
-    // data bounds
     const rpmMin = perf.rpm[0];
     const rpmMax = perf.rpm[perf.rpm.length - 1];
 
-    // PS and Nm scale ranges (autoscale)
     const psMax = Math.max(...perf.stdPSCurve, ...perf.stgPSCurve) * 1.08;
     const nmMax = Math.max(...perf.stdNmCurve, ...perf.stgNmCurve) * 1.08;
 
@@ -284,39 +285,26 @@
       const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
       clearCanvas();
-
-      // background grid
       drawGrid(x0, y0, x1, y1, 12, 6);
-
-      // watermark (ONLY logo)
       drawWatermarkLogo();
-
-      // axes labels
       drawAxesLabels(x0, y0, x1, y1);
 
-      // lines (staggered inside same animation)
-      // PS lines first, Nm lines slightly after
       const t1 = clamp(ease * 1.08, 0, 1);
       const t2 = clamp((ease - 0.10) * 1.18, 0, 1);
 
-      // Colors match legend in CSS
       drawLine(xs, ysPsStd, t1, "#f1c40f", 2.6, 2);
       drawLine(xs, ysPsStg, t1, "#ffd56a", 2.6, 2);
       drawLine(xs, ysNmStd, t2, "#ff2b2b", 2.6, 2);
       drawLine(xs, ysNmStg, t2, "#ff6a6a", 2.6, 2);
 
-      // frame border
       ctx.save();
       ctx.strokeStyle = "rgba(255,255,255,0.10)";
       ctx.lineWidth = 1;
       ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
       ctx.restore();
 
-      if (t < 1) {
-        chartAnimRaf = requestAnimationFrame(tick);
-      } else {
-        chartAnimRaf = null;
-      }
+      if (t < 1) chartAnimRaf = requestAnimationFrame(tick);
+      else chartAnimRaf = null;
     };
 
     chartAnimRaf = requestAnimationFrame(tick);
@@ -326,13 +314,10 @@
      Populate & logic
      ========================================================= */
   function init() {
-    // fill brands
     fillSelect(selBrand, Object.keys(DB));
     resetSelect(selModel, true);
     resetSelect(selGen, true);
     resetSelect(selEngine, true);
-
-    // start closed
     closePanel();
   }
 
@@ -342,12 +327,9 @@
     resetSelect(selGen, true);
     resetSelect(selEngine, true);
     closePanel();
-
     if (!brand) return;
-
-    const models = Object.keys(DB[brand] || {});
     resetSelect(selModel, false);
-    fillSelect(selModel, models);
+    fillSelect(selModel, Object.keys(DB[brand] || {}));
   }
 
   function onModel() {
@@ -356,12 +338,9 @@
     resetSelect(selGen, true);
     resetSelect(selEngine, true);
     closePanel();
-
     if (!brand || !model) return;
-
-    const gens = Object.keys(DB[brand][model] || {});
     resetSelect(selGen, false);
-    fillSelect(selGen, gens);
+    fillSelect(selGen, Object.keys(DB[brand][model] || {}));
   }
 
   function onGen() {
@@ -370,12 +349,9 @@
     const gen = selGen.value;
     resetSelect(selEngine, true);
     closePanel();
-
     if (!brand || !model || !gen) return;
-
-    const engines = Object.keys(DB[brand][model][gen] || {});
     resetSelect(selEngine, false);
-    fillSelect(selEngine, engines);
+    fillSelect(selEngine, Object.keys(DB[brand][model][gen] || {}));
   }
 
   async function onEngine() {
@@ -390,26 +366,20 @@
     const item = DB?.[brand]?.[model]?.[gen]?.[engine];
     if (!item) return;
 
-    // load logo once
-    if (logoImg === null) {
-      logoImg = await loadLogo();
-    }
+    if (logoImg === null) logoImg = await loadLogo();
 
-    // fill texts
     vehicleTitle.textContent = item.display.title;
-    vehicleSub.textContent = item.display.sub;
+    vehicleSub.textContent = item.display.sub || "";
 
-    // numbers
     const p = item.perf;
-    psStd.textContent = String(p.stdPS);
-    psStg.textContent = String(p.stgPS);
-    psDiff.textContent = String(p.stgPS - p.stdPS);
+    psStd.textContent = p.stdPS;
+    psStg.textContent = p.stgPS;
+    psDiff.textContent = p.stgPS - p.stdPS;
 
-    nmStd.textContent = String(p.stdNm);
-    nmStg.textContent = String(p.stgNm);
-    nmDiff.textContent = String(p.stgNm - p.stdNm);
+    nmStd.textContent = p.stdNm;
+    nmStg.textContent = p.stgNm;
+    nmDiff.textContent = p.stgNm - p.stdNm;
 
-    // specs
     spFuel.textContent = item.specs.fuel;
     spMethod.textContent = item.specs.method;
     spType.textContent = item.specs.type;
@@ -417,13 +387,24 @@
     spEcu.textContent = item.specs.ecu;
     spEngineCode.textContent = item.specs.engineCode;
 
-    // open panel and animate chart AFTER open begins
-    openPanel();
+    /* ===== ZUSATZOPTIONEN ===== */
+    optionGrid.innerHTML = "";
+    if (Array.isArray(item.options) && item.options.length > 0) {
+      optionCard.hidden = false;
+      item.options.forEach(key => {
+        const label = OPTION_DEFS[key];
+        if (!label) return;
+        const el = document.createElement("div");
+        el.className = "spec-item";
+        el.innerHTML = `<span>${label}</span>`;
+        optionGrid.appendChild(el);
+      });
+    } else {
+      optionCard.hidden = true;
+    }
 
-    // little delay so open animation starts, then chart anim
-    setTimeout(() => {
-      animateChart(item.perf);
-    }, 180);
+    openPanel();
+    setTimeout(() => animateChart(item.perf), 180);
   }
 
   /* =========================================================
@@ -436,6 +417,3 @@
 
   document.addEventListener("DOMContentLoaded", init);
 })();
-
-
-

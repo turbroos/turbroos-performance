@@ -1,4 +1,3 @@
-ich finde es nicht bitte ich sende dir den aktuellen code bitte ergänze genau das was wir eben besprochen haben lösche nicht von dem aktuellen stand ändern ergänze nur das was verbessert hast 
 
 (() => {
   /* =========================================================
@@ -419,3 +418,4 @@ ich finde es nicht bitte ich sende dir den aktuellen code bitte ergänze genau d
 
   document.addEventListener("DOMContentLoaded", init);
 })();
+

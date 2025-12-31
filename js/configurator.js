@@ -1,4 +1,3 @@
-
 (() => {
   /* =========================================================
      Test-Datenbank (Schritt A: 1 Fahrzeug)
@@ -60,35 +59,36 @@
   /* =========================================================
      DOM
      ========================================================= */
-  const selBrand = document.getElementById("selBrand");
-  const selModel = document.getElementById("selModel");
-  const selGen = document.getElementById("selGen");
+  const selBrand  = document.getElementById("selBrand");
+  const selModel  = document.getElementById("selModel");
+  const selGen    = document.getElementById("selGen");
   const selEngine = document.getElementById("selEngine");
 
-  const panel = document.getElementById("resultPanel");
+  const panel       = document.getElementById("resultPanel");
   const vehicleTitle = document.getElementById("vehicleTitle");
-  const vehicleSub = document.getElementById("vehicleSub");
+  const vehicleSub   = document.getElementById("vehicleSub");
 
-  const psStd = document.getElementById("psStd");
-  const psStg = document.getElementById("psStg");
+  const psStd  = document.getElementById("psStd");
+  const psStg  = document.getElementById("psStg");
   const psDiff = document.getElementById("psDiff");
-  const nmStd = document.getElementById("nmStd");
-  const nmStg = document.getElementById("nmStg");
+  const nmStd  = document.getElementById("nmStd");
+  const nmStg  = document.getElementById("nmStg");
   const nmDiff = document.getElementById("nmDiff");
 
-  const spFuel = document.getElementById("spFuel");
-  const spMethod = document.getElementById("spMethod");
-  const spType = document.getElementById("spType");
-  const spDisp = document.getElementById("spDisp");
-  const spEcu = document.getElementById("spEcu");
+  const spFuel       = document.getElementById("spFuel");
+  // spMethod bewusst NICHT mehr benötigt (damit kein Crash entsteht)
+  const spType       = document.getElementById("spType");
+  const spDisp       = document.getElementById("spDisp");
+  const spEcu        = document.getElementById("spEcu");
   const spEngineCode = document.getElementById("spEngineCode");
+  const spCompression = document.getElementById("spCompression"); // neu (wenn im HTML vorhanden)
 
   // Zusatzoptionen
   const optionCard = document.getElementById("optionCard");
   const optionGrid = document.getElementById("optionGrid");
 
   const canvas = document.getElementById("perfChart");
-  const ctx = canvas.getContext("2d", { alpha: true });
+  const ctx = canvas ? canvas.getContext("2d", { alpha: true }) : null;
 
   let logoImg = null;
   let chartAnimRaf = null;
@@ -97,12 +97,14 @@
      Helpers
      ========================================================= */
   function resetSelect(selectEl, disabled = true) {
+    if (!selectEl) return;
     selectEl.innerHTML = `<option value="">Bitte wählen…</option>`;
     selectEl.disabled = disabled;
     selectEl.value = "";
   }
 
   function fillSelect(selectEl, items) {
+    if (!selectEl) return;
     for (const it of items) {
       const opt = document.createElement("option");
       opt.value = it;
@@ -112,19 +114,23 @@
   }
 
   function closePanel() {
-    panel.classList.remove("is-open");
-    panel.setAttribute("aria-hidden", "true");
+    if (panel) {
+      panel.classList.remove("is-open");
+      panel.setAttribute("aria-hidden", "true");
+    }
     if (chartAnimRaf) cancelAnimationFrame(chartAnimRaf);
     chartAnimRaf = null;
     clearCanvas();
   }
 
   function openPanel() {
+    if (!panel) return;
     panel.classList.add("is-open");
     panel.setAttribute("aria-hidden", "false");
   }
 
   function clearCanvas() {
+    if (!ctx || !canvas) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
@@ -136,8 +142,13 @@
     return a + (b - a) * t;
   }
 
+  function safeText(el, value, fallback = "—") {
+    if (!el) return;
+    el.textContent = (value === undefined || value === null || value === "") ? fallback : String(value);
+  }
+
   /* =========================================================
-     Chart rendering (animated) – UNVERÄNDERT
+     Chart rendering (animated) – UNVERÄNDERT (nur mit Guards)
      ========================================================= */
   function loadLogo() {
     return new Promise((resolve) => {
@@ -149,6 +160,7 @@
   }
 
   function drawWatermarkLogo() {
+    if (!ctx || !canvas) return;
     if (!logoImg) return;
 
     const w = canvas.width;
@@ -168,6 +180,7 @@
   }
 
   function drawGrid(x0, y0, x1, y1, xTicks = 10, yTicks = 6) {
+    if (!ctx) return;
     ctx.save();
     ctx.strokeStyle = "rgba(255,255,255,0.08)";
     ctx.lineWidth = 1;
@@ -195,6 +208,7 @@
   }
 
   function drawAxesLabels(x0, y0, x1, y1) {
+    if (!ctx) return;
     ctx.save();
     ctx.fillStyle = "rgba(255,255,255,0.75)";
     ctx.font = "800 12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
@@ -219,6 +233,7 @@
   }
 
   function drawLine(xs, ys, t, color, width = 2.5, dotEvery = 1) {
+    if (!ctx) return;
     const upto = Math.floor(lerp(1, xs.length, t));
 
     ctx.save();
@@ -245,6 +260,8 @@
   }
 
   function animateChart(perf) {
+    if (!ctx || !canvas) return;
+
     if (chartAnimRaf) cancelAnimationFrame(chartAnimRaf);
     chartAnimRaf = null;
 
@@ -315,10 +332,14 @@
      Populate & logic
      ========================================================= */
   function init() {
+    // Wenn die Selects fehlen -> nicht crashen
+    if (!selBrand || !selModel || !selGen || !selEngine) return;
+
     fillSelect(selBrand, Object.keys(DB));
     resetSelect(selModel, true);
     resetSelect(selGen, true);
     resetSelect(selEngine, true);
+
     closePanel();
   }
 
@@ -328,7 +349,9 @@
     resetSelect(selGen, true);
     resetSelect(selEngine, true);
     closePanel();
+
     if (!brand) return;
+
     resetSelect(selModel, false);
     fillSelect(selModel, Object.keys(DB[brand] || {}));
   }
@@ -336,10 +359,13 @@
   function onModel() {
     const brand = selBrand.value;
     const model = selModel.value;
+
     resetSelect(selGen, true);
     resetSelect(selEngine, true);
     closePanel();
+
     if (!brand || !model) return;
+
     resetSelect(selGen, false);
     fillSelect(selGen, Object.keys(DB[brand][model] || {}));
   }
@@ -348,9 +374,12 @@
     const brand = selBrand.value;
     const model = selModel.value;
     const gen = selGen.value;
+
     resetSelect(selEngine, true);
     closePanel();
+
     if (!brand || !model || !gen) return;
+
     resetSelect(selEngine, false);
     fillSelect(selEngine, Object.keys(DB[brand][model][gen] || {}));
   }
@@ -360,8 +389,8 @@
     const model = selModel.value;
     const gen = selGen.value;
     const engine = selEngine.value;
-    closePanel();
 
+    closePanel();
     if (!brand || !model || !gen || !engine) return;
 
     const item = DB?.[brand]?.[model]?.[gen]?.[engine];
@@ -369,30 +398,40 @@
 
     if (logoImg === null) logoImg = await loadLogo();
 
-    vehicleTitle.textContent = item.display.title;
-    vehicleSub.textContent = item.display.sub || "";
+    // Titel / Sub
+    safeText(vehicleTitle, item.display?.title, "—");
+    safeText(vehicleSub, item.display?.sub, "");
 
+    // Zahlen
     const p = item.perf;
-    psStd.textContent = p.stdPS;
-    psStg.textContent = p.stgPS;
-    psDiff.textContent = p.stgPS - p.stdPS;
+    safeText(psStd,  p.stdPS);
+    safeText(psStg,  p.stgPS);
+    safeText(psDiff, p.stgPS - p.stdPS);
 
-    nmStd.textContent = p.stdNm;
-    nmStg.textContent = p.stgNm;
-    nmDiff.textContent = p.stgNm - p.stdNm;
+    safeText(nmStd,  p.stdNm);
+    safeText(nmStg,  p.stgNm);
+    safeText(nmDiff, p.stgNm - p.stdNm);
 
-    spFuel.textContent = item.specs.fuel;
-    spMethod.textContent = item.specs.method;
-    spType.textContent = item.specs.type;
-    spDisp.textContent = item.specs.displacement;
-    spEcu.textContent = item.specs.ecu;
-    spEngineCode.textContent = item.specs.engineCode;
+    // Motordaten
+    safeText(spFuel, item.specs?.fuel);
+
+    // Verdichtungsverhältnis (wenn im HTML vorhanden)
+    if (spCompression) {
+      safeText(spCompression, item.specs?.compression);
+    }
+
+    // Rest wie gehabt
+    safeText(spType, item.specs?.type);
+    safeText(spDisp, item.specs?.displacement);
+    safeText(spEcu, item.specs?.ecu);
+    safeText(spEngineCode, item.specs?.engineCode);
 
     /* ===== ZUSATZOPTIONEN ===== */
-    optionGrid.innerHTML = "";
-    if (Array.isArray(item.options) && item.options.length > 0) {
+    if (optionGrid) optionGrid.innerHTML = "";
+
+    if (optionCard && optionGrid && Array.isArray(item.options) && item.options.length > 0) {
       optionCard.hidden = false;
-      item.options.forEach(key => {
+      item.options.forEach((key) => {
         const label = OPTION_DEFS[key];
         if (!label) return;
         const el = document.createElement("div");
@@ -401,9 +440,10 @@
         optionGrid.appendChild(el);
       });
     } else {
-      optionCard.hidden = true;
+      if (optionCard) optionCard.hidden = true;
     }
 
+    // Panel öffnen + Chart
     openPanel();
     setTimeout(() => animateChart(item.perf), 180);
   }
@@ -411,11 +451,10 @@
   /* =========================================================
      Events
      ========================================================= */
-  selBrand.addEventListener("change", onBrand);
-  selModel.addEventListener("change", onModel);
-  selGen.addEventListener("change", onGen);
-  selEngine.addEventListener("change", onEngine);
+  if (selBrand)  selBrand.addEventListener("change", onBrand);
+  if (selModel)  selModel.addEventListener("change", onModel);
+  if (selGen)    selGen.addEventListener("change", onGen);
+  if (selEngine) selEngine.addEventListener("change", onEngine);
 
   document.addEventListener("DOMContentLoaded", init);
 })();
-

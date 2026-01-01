@@ -43,6 +43,129 @@ window.OPTION_DEFS = {
 // =========================================================
 // Audi → A3 → 8P (2003–2008)
 // =========================================================
+
+window.DB.Audi["80"] = {
+  "B4 (1991–1995)": {
+
+    "1.9 TDI 90hp": {
+      display: { title: "Audi 80 1.9 TDI 90hp" },
+      perf: {
+        stdPS: 90, stgPS: 115,
+        stdNm: 202, stgNm: 260,
+        rpm: CURVES.diesel.rpm,
+        stdPSCurve: scaleCurve(CURVES.diesel.ps, 90),
+        stgPSCurve: scaleCurve(CURVES.diesel.ps, 115),
+        stdNmCurve: scaleCurve(CURVES.diesel.nm, 202),
+        stgNmCurve: scaleCurve(CURVES.diesel.nm, 260)
+      },
+      specs: {
+        fuel: "diesel",
+        compression: "19.5 : 1",
+        type: "Stage 1",
+        displacement: "1896 cc",
+        ecu: "Bosch",
+        engineCode: "1Z"
+      },
+      options: ["EGR_OFF", "DPF_OFF", "DTC_REMOVAL", "FLAPS", "VMAX", "ADBLUE"]
+    }
+
+  }
+};
+
+window.DB.Audi.A1 = {
+  "8X (2010–2014)": {
+
+    "1.2 TFSI 105hp": {
+      display: { title: "Audi A1 1.2 TFSI 105hp" },
+      perf: {
+        stdPS: 105, stgPS: 140,
+        stdNm: 175, stgNm: 225,
+        rpm: CURVES.petrol.rpm,
+        stdPSCurve: scaleCurve(CURVES.petrol.ps, 105),
+        stgPSCurve: scaleCurve(CURVES.petrol.ps, 140),
+        stdNmCurve: scaleCurve(CURVES.petrol.nm, 175),
+        stgNmCurve: scaleCurve(CURVES.petrol.nm, 225)
+      },
+      specs: {
+        fuel: "petrol",
+        compression: "10.0 : 1",
+        type: "Stage 1",
+        displacement: "1197 cc",
+        ecu: "Siemens / Continental Simos 10",
+        engineCode: "CBZA"
+      },
+      options: ["DTC_REMOVAL", "POP_BANG", "START_STOP_OFF", "DECAT", "FLAPS", "VMAX"]
+    },
+
+    "1.2 TFSI 86hp": {
+      display: { title: "Audi A1 1.2 TFSI 86hp" },
+      perf: {
+        stdPS: 86, stgPS: 140,
+        stdNm: 160, stgNm: 225,
+        rpm: CURVES.petrol.rpm,
+        stdPSCurve: scaleCurve(CURVES.petrol.ps, 86),
+        stgPSCurve: scaleCurve(CURVES.petrol.ps, 140),
+        stdNmCurve: scaleCurve(CURVES.petrol.nm, 160),
+        stgNmCurve: scaleCurve(CURVES.petrol.nm, 225)
+      },
+      specs: {
+        fuel: "petrol",
+        compression: "10.0 : 1",
+        type: "Stage 1",
+        displacement: "1197 cc",
+        ecu: "Siemens / Continental Simos 10",
+        engineCode: "CBZA"
+      },
+      options: ["DTC_REMOVAL", "POP_BANG", "START_STOP_OFF", "DECAT", "VMAX"]
+    },
+
+    "1.4 TFSI 122hp": {
+      display: { title: "Audi A1 1.4 TFSI 122hp" },
+      perf: {
+        stdPS: 122, stgPS: 155,
+        stdNm: 200, stgNm: 270,
+        rpm: CURVES.petrol.rpm,
+        stdPSCurve: scaleCurve(CURVES.petrol.ps, 122),
+        stgPSCurve: scaleCurve(CURVES.petrol.ps, 155),
+        stdNmCurve: scaleCurve(CURVES.petrol.nm, 200),
+        stgNmCurve: scaleCurve(CURVES.petrol.nm, 270)
+      },
+      specs: {
+        fuel: "petrol",
+        compression: "10.0 : 1",
+        type: "Stage 1",
+        displacement: "1390 cc",
+        ecu: "Bosch MED17.5",
+        engineCode: "CAXA"
+      },
+      options: ["DTC_REMOVAL", "POP_BANG", "DECAT", "FLAPS", "VMAX"]
+    },
+
+    "1.6 TDI CR 90hp": {
+      display: { title: "Audi A1 1.6 TDI CR 90hp" },
+      perf: {
+        stdPS: 90, stgPS: 140,
+        stdNm: 230, stgNm: 320,
+        rpm: CURVES.diesel.rpm,
+        stdPSCurve: scaleCurve(CURVES.diesel.ps, 90),
+        stgPSCurve: scaleCurve(CURVES.diesel.ps, 140),
+        stdNmCurve: scaleCurve(CURVES.diesel.nm, 230),
+        stgNmCurve: scaleCurve(CURVES.diesel.nm, 320)
+      },
+      specs: {
+        fuel: "diesel",
+        compression: "16.5 : 1",
+        type: "Stage 1",
+        displacement: "1598 cc",
+        ecu: "Siemens / Continental PCR 2.1",
+        engineCode: "CAYB"
+      },
+      options: ["EGR_OFF", "DPF_OFF", "DTC_REMOVAL", "START_STOP_OFF", "FLAPS", "VMAX", "ADBLUE"]
+    }
+
+  }
+};
+
 window.DB.Audi = {
   A3: {
     "8P (2003–2008)": {

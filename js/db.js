@@ -1,7 +1,12 @@
 /* =========================================================
    db.js  (NUR Datenbank / NUR Konstanten)
    ========================================================= */
-const CURVES = {
+
+// DB-Container sicher initialisieren (sonst: "DB is not defined")
+window.DB = window.DB || {};
+
+// Kurven-Templates (normiert 0..1)
+window.CURVES = {
   petrol: {
     rpm: [800, 1200, 1600, 2000, 2500, 3000, 3500, 4000, 4500, 5000],
     ps:  [0.15, 0.30, 0.55, 0.75, 0.88, 0.95, 1.00, 0.98, 0.90, 0.70],
@@ -14,11 +19,12 @@ const CURVES = {
   }
 };
 
-function scaleCurve(base, peak) {
+// Curve-Scaler (Peak = Maximalwert)
+window.scaleCurve = function scaleCurve(base, peak) {
   return base.map(v => Math.round(v * peak));
-}
+};
 
-
+// Options (Labels)
 window.OPTION_DEFS = {
   EGR_OFF:        "EGR OFF",
   DPF_OFF:        "DPF OFF",
@@ -27,13 +33,17 @@ window.OPTION_DEFS = {
   FLAPS:          "Flaps",
   VMAX:           "Vmax",
   ADBLUE:         "AdBlue",
-  // optional später:
-  // POP_BANG: "Pop & Bang / Crackle",
-  // DECAT: "Decat",
-  // ANTILAG: "Anti Lag"
+
+  // (du verwendest diese Keys bereits in options[])
+  POP_BANG:       "Pop & Bang / Crackle map",
+  DECAT:          "Decat",
+  ANTILAG:        "Anti Lag"
 };
 
-DB.Audi = {
+// =========================================================
+// Audi → A3 → 8P (2003–2008)
+// =========================================================
+window.DB.Audi = {
   A3: {
     "8P (2003–2008)": {
 
@@ -42,11 +52,11 @@ DB.Audi = {
         perf: {
           stdPS: 115, stgPS: 125,
           stdNm: 155, stgNm: 170,
-          rpm: CURVES.petrol.rpm,
-          stdPSCurve: scaleCurve(CURVES.petrol.ps, 115),
-          stgPSCurve: scaleCurve(CURVES.petrol.ps, 125),
-          stdNmCurve: scaleCurve(CURVES.petrol.nm, 155),
-          stgNmCurve: scaleCurve(CURVES.petrol.nm, 170)
+          rpm: window.CURVES.petrol.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 115),
+          stgPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 125),
+          stdNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 155),
+          stgNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 170)
         },
         specs: {
           fuel: "petrol",
@@ -64,11 +74,11 @@ DB.Audi = {
         perf: {
           stdPS: 102, stgPS: 112,
           stdNm: 148, stgNm: 163,
-          rpm: CURVES.petrol.rpm,
-          stdPSCurve: scaleCurve(CURVES.petrol.ps, 102),
-          stgPSCurve: scaleCurve(CURVES.petrol.ps, 112),
-          stdNmCurve: scaleCurve(CURVES.petrol.nm, 148),
-          stgNmCurve: scaleCurve(CURVES.petrol.nm, 163)
+          rpm: window.CURVES.petrol.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 102),
+          stgPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 112),
+          stdNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 148),
+          stgNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 163)
         },
         specs: {
           fuel: "petrol",
@@ -86,11 +96,11 @@ DB.Audi = {
         perf: {
           stdPS: 160, stgPS: 210,
           stdNm: 280, stgNm: 340,
-          rpm: CURVES.petrol.rpm,
-          stdPSCurve: scaleCurve(CURVES.petrol.ps, 160),
-          stgPSCurve: scaleCurve(CURVES.petrol.ps, 210),
-          stdNmCurve: scaleCurve(CURVES.petrol.nm, 280),
-          stgNmCurve: scaleCurve(CURVES.petrol.nm, 340)
+          rpm: window.CURVES.petrol.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 160),
+          stgPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 210),
+          stdNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 280),
+          stgNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 340)
         },
         specs: {
           fuel: "petrol",
@@ -108,11 +118,11 @@ DB.Audi = {
         perf: {
           stdPS: 200, stgPS: 250,
           stdNm: 280, stgNm: 380,
-          rpm: CURVES.petrol.rpm,
-          stdPSCurve: scaleCurve(CURVES.petrol.ps, 200),
-          stgPSCurve: scaleCurve(CURVES.petrol.ps, 250),
-          stdNmCurve: scaleCurve(CURVES.petrol.nm, 280),
-          stgNmCurve: scaleCurve(CURVES.petrol.nm, 380)
+          rpm: window.CURVES.petrol.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 200),
+          stgPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 250),
+          stdNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 280),
+          stgNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 380)
         },
         specs: {
           fuel: "petrol",
@@ -130,11 +140,11 @@ DB.Audi = {
         perf: {
           stdPS: 250, stgPS: 265,
           stdNm: 320, stgNm: 340,
-          rpm: CURVES.petrol.rpm,
-          stdPSCurve: scaleCurve(CURVES.petrol.ps, 250),
-          stgPSCurve: scaleCurve(CURVES.petrol.ps, 265),
-          stdNmCurve: scaleCurve(CURVES.petrol.nm, 320),
-          stgNmCurve: scaleCurve(CURVES.petrol.nm, 340)
+          rpm: window.CURVES.petrol.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 250),
+          stgPSCurve: window.scaleCurve(window.CURVES.petrol.ps, 265),
+          stdNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 320),
+          stgNmCurve: window.scaleCurve(window.CURVES.petrol.nm, 340)
         },
         specs: {
           fuel: "petrol",
@@ -152,11 +162,11 @@ DB.Audi = {
         perf: {
           stdPS: 105, stgPS: 140,
           stdNm: 250, stgNm: 340,
-          rpm: CURVES.diesel.rpm,
-          stdPSCurve: scaleCurve(CURVES.diesel.ps, 105),
-          stgPSCurve: scaleCurve(CURVES.diesel.ps, 140),
-          stdNmCurve: scaleCurve(CURVES.diesel.nm, 250),
-          stgNmCurve: scaleCurve(CURVES.diesel.nm, 340)
+          rpm: window.CURVES.diesel.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 105),
+          stgPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 140),
+          stdNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 250),
+          stgNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 340)
         },
         specs: {
           fuel: "diesel",
@@ -167,18 +177,18 @@ DB.Audi = {
           engineCode: "BKC"
         },
         options: ["EGR_OFF", "DPF_OFF", "DTC_REMOVAL", "FLAPS", "VMAX", "ADBLUE"]
-      }
+      }, // ✅ KOMMA war bei dir FEHLEND
 
       "2.0 TDI 136hp": {
         display: { title: "Audi A3 2.0 TDI 136hp" },
         perf: {
           stdPS: 136, stgPS: 175,
           stdNm: 320, stgNm: 395,
-          rpm: CURVES.diesel.rpm,
-          stdPSCurve: scaleCurve(CURVES.diesel.ps, 136),
-          stgPSCurve: scaleCurve(CURVES.diesel.ps, 175),
-          stdNmCurve: scaleCurve(CURVES.diesel.nm, 320),
-          stgNmCurve: scaleCurve(CURVES.diesel.nm, 395)
+          rpm: window.CURVES.diesel.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 136),
+          stgPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 175),
+          stdNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 320),
+          stgNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 395)
         },
         specs: {
           fuel: "diesel",
@@ -196,11 +206,11 @@ DB.Audi = {
         perf: {
           stdPS: 136, stgPS: 175,
           stdNm: 320, stgNm: 380,
-          rpm: CURVES.diesel.rpm,
-          stdPSCurve: scaleCurve(CURVES.diesel.ps, 136),
-          stgPSCurve: scaleCurve(CURVES.diesel.ps, 175),
-          stdNmCurve: scaleCurve(CURVES.diesel.nm, 320),
-          stgNmCurve: scaleCurve(CURVES.diesel.nm, 380)
+          rpm: window.CURVES.diesel.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 136),
+          stgPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 175),
+          stdNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 320),
+          stgNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 380)
         },
         specs: {
           fuel: "diesel",
@@ -218,11 +228,11 @@ DB.Audi = {
         perf: {
           stdPS: 140, stgPS: 175,
           stdNm: 320, stgNm: 380,
-          rpm: CURVES.diesel.rpm,
-          stdPSCurve: scaleCurve(CURVES.diesel.ps, 140),
-          stgPSCurve: scaleCurve(CURVES.diesel.ps, 175),
-          stdNmCurve: scaleCurve(CURVES.diesel.nm, 320),
-          stgNmCurve: scaleCurve(CURVES.diesel.nm, 380)
+          rpm: window.CURVES.diesel.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 140),
+          stgPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 175),
+          stdNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 320),
+          stgNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 380)
         },
         specs: {
           fuel: "diesel",
@@ -240,11 +250,11 @@ DB.Audi = {
         perf: {
           stdPS: 163, stgPS: 200,
           stdNm: 350, stgNm: 420,
-          rpm: CURVES.diesel.rpm,
-          stdPSCurve: scaleCurve(CURVES.diesel.ps, 163),
-          stgPSCurve: scaleCurve(CURVES.diesel.ps, 200),
-          stdNmCurve: scaleCurve(CURVES.diesel.nm, 350),
-          stgNmCurve: scaleCurve(CURVES.diesel.nm, 420)
+          rpm: window.CURVES.diesel.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 163),
+          stgPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 200),
+          stdNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 350),
+          stgNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 420)
         },
         specs: {
           fuel: "diesel",
@@ -262,11 +272,11 @@ DB.Audi = {
         perf: {
           stdPS: 170, stgPS: 200,
           stdNm: 350, stgNm: 420,
-          rpm: CURVES.diesel.rpm,
-          stdPSCurve: scaleCurve(CURVES.diesel.ps, 170),
-          stgPSCurve: scaleCurve(CURVES.diesel.ps, 200),
-          stdNmCurve: scaleCurve(CURVES.diesel.nm, 350),
-          stgNmCurve: scaleCurve(CURVES.diesel.nm, 420)
+          rpm: window.CURVES.diesel.rpm,
+          stdPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 170),
+          stgPSCurve: window.scaleCurve(window.CURVES.diesel.ps, 200),
+          stdNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 350),
+          stgNmCurve: window.scaleCurve(window.CURVES.diesel.nm, 420)
         },
         specs: {
           fuel: "diesel",
@@ -274,12 +284,11 @@ DB.Audi = {
           type: "Stage 1",
           displacement: "1968 cc",
           ecu: "Bosch EDC17",
-          engineCode: "BMM / BMN"
+          engineCode: "BMN"
         },
         options: ["EGR_OFF", "DPF_OFF", "DTC_REMOVAL", "START_STOP_OFF", "FLAPS", "VMAX", "ADBLUE"]
       }
 
-       
     }
   }
 };

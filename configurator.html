@@ -1,102 +1,143 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fahrzeug-Konfigurator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fahrzeug-Konfigurator</title>
 
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/configurator.css" />
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/configurator.css">
+
+<style>
+/* ===== Turbroos Widget Wrapper ===== */
+
+.ecu-wrap{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+  overflow:hidden;
+}
+
+#ecuCalculateTool{
+  width:100%;
+  background:#000;
+}
+
+/* Mobile Fix */
+@media(max-width:820px){
+  .ecu-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  #ecuCalculateTool{
+    min-width:980px;
+  }
+}
+
+/* Difference immer Turbroos Rot */
+.ecu-wrap *{
+  --turbroos-red:#960000;
+}
+</style>
+
 </head>
 
 <body class="page-configurator">
+
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html">
-      <img src="img/logo.png" alt="turbroos performance" />
+      <img src="img/logo.png" alt="turbroos performance">
     </a>
-
     <nav class="nav">
       <a href="index.html">Home</a>
-      <a href="configurator.html" class="active" aria-current="page">Konfigurator</a>
+      <a href="configurator.html" class="active">Konfigurator</a>
       <a href="about.html">Über uns</a>
       <a href="legal.html">Rechtliches</a>
     </nav>
-
-    <div class="lang-switch" aria-hidden="true" style="opacity:0; pointer-events:none;">
-      <button class="lang-btn" type="button">DE</button>
-      <button class="lang-btn" type="button">EN</button>
-    </div>
   </div>
 </header>
 
 <main class="container section config-page">
-  <h1 class="page-title">Fahrzeug-Konfigurator</h1>
-  <p class="muted readable">
-    Wähle Marke, Modell, Baujahr und Motorisierung. Alle Werte sind unverbindliche Richtwerte.
-  </p>
 
-  <div class="cfg-shell">
-    <div class="cfg-widget-head">
-      <span class="cfg-dot"></span>
-      <span>Chiptuning-Berechnungstool (Widget)</span>
-    </div>
+<h1 class="page-title">Fahrzeug-Konfigurator</h1>
+<p class="muted readable">
+Wähle Marke, Modell, Baujahr und Motorisierung.
+</p>
 
-    <!-- iFrame Wrapper (so wird nichts abgeschnitten + Mobile passt) -->
-    <div class="ecu-iframe-wrap">
-      <iframe
-        id="ecuFrame"
-        class="ecu-iframe"
-        src="ecu-widget.html"
-        title="Chiptuning-Berechnungstool"
-        loading="lazy"
-        scrolling="no"
-        referrerpolicy="no-referrer"
-      ></iframe>
-    </div>
-  </div>
+<div class="ecu-wrap">
+  <div id="ecuCalculateTool"></div>
+</div>
+
 </main>
 
 <footer class="footer">
   <div class="container footer-inner">
     <div>
-      <strong>turbroos performance</strong><br />
-      <span>Chiptuning &amp; Softwareoptimierung</span>
-    </div>
-    <div class="footer-links">
-      <a href="legal.html">Rechtliches</a>
-      <a href="about.html">Über uns</a>
-      <a href="configurator.html" class="active">Konfigurator</a>
+      <strong>turbroos performance</strong><br>
+      <span>Chiptuning & Softwareoptimierung</span>
     </div>
   </div>
 </footer>
 
+<!-- ===== XREMOVER SCRIPT ===== -->
 <script>
-  // iFrame Auto-Height (kein Abschneiden, Diagramm bleibt sichtbar)
-  (function () {
-    const frame = document.getElementById("ecuFrame");
-    if (!frame) return;
+window.$ecu = {
+  lang: "de",
+  width: "1100",
+  BackgroundColor: "#000000",
+  BoxColor: "#960000",
+  FontColor: "#ffffff",
+  ButtonColor: "#960000",
+  ButtonFontColor: "#ffffff",
+  APIID: ""
+};
 
-    function setHeight(h) {
-      const n = Number(h);
-      if (!Number.isFinite(n) || n < 200) return;
-      frame.style.height = Math.ceil(n) + "px";
-    }
+(function(){
+  const s = document.createElement("script");
+  s.src = "https://xremover.net/calculator/ecuob.js?_=" + Date.now();
+  s.async = true;
+  document.body.appendChild(s);
+})();
+</script>
 
-    window.addEventListener("message", (ev) => {
-      // Wir akzeptieren nur Messages von der eigenen Seite (GitHub Pages Domain)
-      // -> trotzdem robust: wir checken nur die Form der Daten
-      const data = ev.data;
-      if (!data || data.type !== "ECU_WIDGET_HEIGHT") return;
-      setHeight(data.height);
+<!-- ===== TURBROOS PATCH ===== -->
+<script>
+(function(){
+
+  const RED = "#960000";
+  const tool = document.getElementById("ecuCalculateTool");
+
+  function fixWidget(){
+
+    /* Difference Blau -> Rot */
+    tool.querySelectorAll("*").forEach(el=>{
+      const txt = (el.textContent||"").trim();
+      const st = (el.getAttribute("style")||"").toLowerCase();
+
+      if(txt.match(/^\d+(\.\d+)?\s?(hp|nm)$/i)){
+        if(st.includes("blue") || st.includes("rgb(0")){
+          el.style.color = RED;
+        }
+      }
+
+      if((el.className||"").toLowerCase().includes("diff")){
+        el.style.color = RED;
+      }
     });
 
-    // Fallback: falls Message spät kommt
-    frame.addEventListener("load", () => {
-      // Mindesthöhe, bis erstes Resize kommt
-      frame.style.height = frame.style.height || "900px";
-    });
-  })();
+  }
+
+  const observer = new MutationObserver(()=>{
+    fixWidget();
+  });
+
+  observer.observe(tool,{childList:true,subtree:true});
+
+  setTimeout(fixWidget,1500);
+  setTimeout(fixWidget,3000);
+
+})();
 </script>
 
 </body>

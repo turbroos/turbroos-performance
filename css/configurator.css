@@ -174,4 +174,46 @@
 #ecuCalculateTool [style*="color:#00"]{
   color: #960000 !important;
 }
+/* =========================================================
+   XRemover – NUR Fix 1 + Fix 2 (sonst nichts anfassen)
+   1) Mobile: HP/TORQUE-Labels (linke Pfeil-Boxen) sichtbar
+   2) Difference (blau) -> Turbroos Rot
+   ========================================================= */
+
+:root{ --turbroos-red:#960000; }
+
+/* (2) Difference blau -> rot */
+#ecuCalculateTool .diff,
+#ecuCalculateTool .difference,
+#ecuCalculateTool [class*="diff"],
+#ecuCalculateTool [class*="Diff"],
+#ecuCalculateTool [class*="difference"],
+#ecuCalculateTool [style*="color: blue"],
+#ecuCalculateTool [style*="color:blue"],
+#ecuCalculateTool [style*="color: rgb(0,"],
+#ecuCalculateTool [style*="color:rgb(0,"]{
+  color: var(--turbroos-red) !important;
+}
+
+/* (1) Mobile: HP / TORQUE Box-Labels nicht verstecken */
+@media (max-width: 820px){
+  /* die typischen "Label"-Elemente wieder einblenden */
+  #ecuCalculateTool .hp,
+  #ecuCalculateTool .torque,
+  #ecuCalculateTool [class*="hp"],
+  #ecuCalculateTool [class*="torque"],
+  #ecuCalculateTool [class*="HP"],
+  #ecuCalculateTool [class*="Torque"]{
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* falls es über flex/grid "zusammengeschoben" wird */
+  #ecuCalculateTool .hp * ,
+  #ecuCalculateTool .torque *{
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
 

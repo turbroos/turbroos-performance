@@ -1,4 +1,38 @@
 /* =========================================================
+   XRemover Widget – Mini Fixes (nur 2 Dinge)
+   1) Mobile: HP/TORQUE Labels sichtbar
+   2) Difference Blau -> Turbroos Rot
+   ========================================================= */
+
+:root{
+  --turbroos-red: #960000;
+}
+
+/* 2) Difference blau -> rot (falls XRemover blaue Farbe nutzt) */
+#ecuCalculateTool .diff,
+#ecuCalculateTool .difference,
+#ecuCalculateTool [class*="diff"],
+#ecuCalculateTool [class*="Diff"],
+#ecuCalculateTool [style*="color: blue"],
+#ecuCalculateTool [style*="color:blue"],
+#ecuCalculateTool [style*="rgb(0,"]{
+  color: var(--turbroos-red) !important;
+}
+
+/* 1) Mobile: HP/TORQUE-Labels NICHT verstecken */
+@media (max-width: 820px){
+  /* häufige Fälle: opacity/visibility/display wird auf Mobile geändert */
+  #ecuCalculateTool .hp,
+  #ecuCalculateTool .torque,
+  #ecuCalculateTool [class*="hp"],
+  #ecuCalculateTool [class*="torque"],
+  #ecuCalculateTool [class*="HP"],
+  #ecuCalculateTool [class*="Torque"]{
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}/* =========================================================
    Konfigurator – Add-on CSS (Desktop nicht zerstören)
    ========================================================= */
 
@@ -140,3 +174,4 @@
 #ecuCalculateTool [style*="color:#00"]{
   color: #960000 !important;
 }
+

@@ -5,46 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ECU Widget</title>
 
-  <style>
-    /* iFrame-Body clean (keine Ränder, keine Überstände) */
-    html, body{
-      margin: 0;
-      padding: 0;
-      background: transparent;
-    }
+<style>
+  html, body{
+    margin: 0;
+    padding: 0;
+    background: #000000; /* <<< HIER schwarz */
+  }
 
-    /* Widget Container */
-    #ecuCalculateTool{
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0;
-    }
+  #ecuCalculateTool{
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #000000; /* <<< zusätzlich absichern */
+  }
 
-    /*
-      Wichtig:
-      KEIN "max-width:100% auf *" mehr!
-      Das hat dir Diagramm/Canvas & Layout zerschossen.
-    */
+  /* Falls irgendein innerer Wrapper weiß ist */
+  #ecuCalculateTool > div{
+    background: #000000 !important;
+  }
 
-    /* Text in Zusatzoptionen (falls Widget da zu hell ist) */
-    #ecuCalculateTool .option,
-    #ecuCalculateTool .option *{
-      color: #111 !important;
-    }
-
-    /* Nur wenn Labels (HP/TORQUE) zu hell/grau sind */
-    #ecuCalculateTool .hp,
-    #ecuCalculateTool .torque,
-    #ecuCalculateTool .label{
-      color: #eaeaea !important;
-    }
-
-    /* Optional: wenn irgendwo Background falsch ist */
-    #ecuCalculateTool{
-      background: transparent;
-    }
-  </style>
+  /* Optional: Text sauber */
+  #ecuCalculateTool{
+    color: #ffffff;
+  }
+</style>
 </head>
 <body>
 

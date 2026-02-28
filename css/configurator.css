@@ -1,6 +1,5 @@
 /* =========================================================
-   Konfigurator – Add-on Styles (Turbroos Look)
-   + ECU Widget Fix (Desktop + Mobile)
+   Konfigurator – Add-on CSS (Desktop nicht zerstören)
    ========================================================= */
 
 :root{
@@ -24,19 +23,17 @@
   border-radius: 20px;
   box-shadow: 0 0 70px rgba(0,0,0,0.65);
   padding: 18px;
-  /* WICHTIG: NICHT hidden, sonst wird unten abgeschnitten */
-  overflow: visible;
 }
 
-/* kleiner Header über dem Widget */
+/* Kleine Überschrift über Widget */
 .cfg-widget-head{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap: 10px;
   color: var(--cfg-soft2);
-  font-weight: 900;
   font-size: 13px;
-  margin: 2px 0 14px;
+  font-weight: 800;
+  padding: 6px 6px 14px;
 }
 
 .cfg-dot{
@@ -48,140 +45,31 @@
 }
 
 /* =========================================================
-   ECU Widget Wrapper (DAS ist der Key für Mobile/Clipping)
+   iFrame Integration (DAS ist der Fix für Mobile + Abschneiden)
    ========================================================= */
-.ecu-widget{
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
 
+.ecu-iframe-wrap{
+  width: 100%;
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.10);
   background: rgba(0,0,0,0.35);
-
-  padding: 14px;
-
-  /* Mobile: wenn Widget breiter ist -> horizontal scroll statt abgeschnitten */
-  overflow-x: auto;
-  overflow-y: visible;
-
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden; /* rund + sauber */
 }
 
-/* Das Tool selbst: NICHT aggressiv alles überschreiben */
-#ecuCalculateTool{
+.ecu-iframe{
   width: 100%;
-  /* wichtig: keine max-width:100% auf alle childs -> killt canvas/diagramm */
-}
-
-/* Falls das Widget iframe nutzt */
-#ecuCalculateTool iframe{
-  width: 100% !important;
-  border: 0;
   display: block;
+  border: 0;
+  height: 900px;       /* wird per postMessage automatisch überschrieben */
+  background: transparent;
 }
 
-/* Canvas / Diagramm: sichtbar + nicht “zerquetscht” */
-#ecuCalculateTool canvas{
-  display: block !important;
-  height: auto !important;
-  max-width: none !important;  /* damit es nicht “kaputt skaliert” */
-}
-
-/* =========================================================
-   Lesbarkeit / Farben (ohne Diagramm zu zerstören)
-   ========================================================= */
-
-/* Überschriften / genereller Text im Widget */
-#ecuCalculateTool,
-#ecuCalculateTool .title,
-#ecuCalculateTool h1,
-#ecuCalculateTool h2,
-#ecuCalculateTool h3,
-#ecuCalculateTool h4{
-  color: #ffffff !important;
-}
-
-/* HP / TORQUE Labels (oft sehr hell/grau) */
-#ecuCalculateTool .hp,
-#ecuCalculateTool .torque,
-#ecuCalculateTool .label{
-  color: #d9d9d9 !important;
-}
-
-/* Wertefelder (Standard/Stage/Diff) */
-#ecuCalculateTool input,
-#ecuCalculateTool .value,
-#ecuCalculateTool .result,
-#ecuCalculateTool .standard,
-#ecuCalculateTool .stage1,
-#ecuCalculateTool .difference{
-  color: #ffffff !important;
-  background-color: #0f0f0f !important;
-  border: 1px solid rgba(150,0,0,0.85) !important;
-}
-
-/* Engine specifications Tabellenwerte */
-#ecuCalculateTool table,
-#ecuCalculateTool td,
-#ecuCalculateTool th,
-#ecuCalculateTool .spec,
-#ecuCalculateTool .spec *{
-  color: #eaeaea !important;
-}
-
-/* =========================================================
-   Zusatzoptionen: Text IN den weißen Kacheln lesbar machen
-   (ohne globale "color" auf alles)
-   ========================================================= */
-
-/* Häufige Pattern: option boxes/cards/tiles */
-#ecuCalculateTool [class*="option"],
-#ecuCalculateTool [class*="Option"],
-#ecuCalculateTool [class*="tile"],
-#ecuCalculateTool [class*="Tile"],
-#ecuCalculateTool [class*="card"],
-#ecuCalculateTool [class*="Card"]{
-  /* NICHT pauschal background ändern, nur Text */
-  color: #111 !important;
-}
-
-/* Falls es echte weiße Boxes sind: Text schwarz erzwingen */
-#ecuCalculateTool [class*="option"] *,
-#ecuCalculateTool [class*="Option"] *,
-#ecuCalculateTool [class*="tile"] *,
-#ecuCalculateTool [class*="Tile"] *{
-  color: #111 !important;
-  font-weight: 900;
-}
-
-/* Viele Widgets haben "Additional options" Headline -> soll weiß bleiben */
-#ecuCalculateTool [class*="Additional"],
-#ecuCalculateTool [class*="additional"],
-#ecuCalculateTool [class*="Additional"] *,
-#ecuCalculateTool [class*="additional"] *{
-  color: #ffffff !important;
-  font-weight: 900;
-}
-
-/* =========================================================
-   Mobile: Widget NICHT abgeschnitten
-   Lösung: wir lassen das Widget im Original-Layout
-   und erlauben horizontales Scrollen im Wrapper.
-   Zusätzlich geben wir dem Widget eine Mindestbreite,
-   damit das Diagramm/Rows nicht “brechen”.
-   ========================================================= */
-@media (max-width: 900px){
+/* Mobile Feinschliff */
+@media (max-width: 920px){
   .cfg-shell{ padding: 14px; }
-  .ecu-widget{ padding: 10px; }
-
-  /* Das ist wichtig: Widget behält Desktop-Layout, Wrapper scrollt */
-  #ecuCalculateTool{
-    min-width: 980px;
-  }
 }
 
-/* sehr kleine Geräte */
-@media (max-width: 420px){
-  #ecuCalculateTool{ min-width: 900px; }
+@media (max-width: 560px){
+  .cfg-shell{ padding: 14px; }
+  .cfg-widget-head{ padding-bottom: 10px; }
 }

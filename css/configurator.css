@@ -23,12 +23,13 @@
   border-radius: 20px;
   box-shadow: 0 0 70px rgba(0,0,0,0.65);
   padding: 18px;
+
+  /* WICHTIG: NICHT clippen, sonst verschwinden Diagramm/Optionen im Widget */
+  overflow: visible;
 }
 
-/* Controls */
-.cfg-controls{
-  padding: 14px 14px 6px;
-}
+/* Controls (dein eigener alter Konfigurator – bleibt drin) */
+.cfg-controls{ padding: 14px 14px 6px; }
 
 .cfg-row{
   display: grid;
@@ -85,7 +86,7 @@
 }
 
 /* =========================================================
-   Result Panel – startet zugeklappt
+   Result Panel – dein alter Konfigurator (bleibt drin)
    ========================================================= */
 .result-panel{
   margin-top: 14px;
@@ -94,7 +95,6 @@
   background: rgba(0,0,0,0.35);
   overflow: hidden;
 
-  /* collapsed by default */
   max-height: 0;
   opacity: 0;
   transform: translateY(6px);
@@ -102,7 +102,7 @@
 }
 
 .result-panel.is-open{
-  max-height: 2200px; /* genug Platz, wächst smooth */
+  max-height: 2200px;
   opacity: 1;
   transform: translateY(0);
 }
@@ -140,9 +140,7 @@
   color: var(--cfg-soft2);
 }
 
-.result-cta{
-  white-space: nowrap;
-}
+.result-cta{ white-space: nowrap; }
 
 /* Grid content */
 .result-grid{
@@ -213,9 +211,7 @@
   font-weight: 900;
 }
 
-.mval.diff{
-  color: rgba(255,255,255,0.92);
-}
+.mval.diff{ color: rgba(255,255,255,0.92); }
 
 /* Chart */
 .chart-card{
@@ -260,10 +256,10 @@
   vertical-align: -1px;
 }
 
-.lg-ps-std::before { background: #f1c40f; }  /* gelb */
-.lg-ps-stg::before { background: #ffd56a; }  /* hellgelb */
-.lg-nm-std::before { background: #ff2b2b; }  /* rot */
-.lg-nm-stg::before { background: #ff6a6a; }  /* hellrot */
+.lg-ps-std::before { background: #f1c40f; }
+.lg-ps-stg::before { background: #ffd56a; }
+.lg-nm-std::before { background: #ff2b2b; }
+.lg-nm-stg::before { background: #ff6a6a; }
 
 .chart-wrap{
   width: 100%;
@@ -321,19 +317,13 @@
   font-weight: 950;
 }
 
-/* Footer text inside results */
 .result-foot{
   padding: 0 18px 18px;
   text-align: center;
 }
 
-/* =========================================================
-   Stagger Animations (nacheinander)
-   ========================================================= */
-.result-panel.is-open [data-anim]{
-  animation: riseIn 520ms ease forwards;
-}
-
+/* Animations */
+.result-panel.is-open [data-anim]{ animation: riseIn 520ms ease forwards; }
 .result-panel.is-open [data-anim="1"]{ animation-delay: 60ms; }
 .result-panel.is-open [data-anim="2"]{ animation-delay: 120ms; }
 .result-panel.is-open [data-anim="3"]{ animation-delay: 180ms; }
@@ -343,18 +333,14 @@
 .result-panel.is-open [data-anim="7"]{ animation-delay: 420ms; }
 .result-panel.is-open [data-anim="8"]{ animation-delay: 480ms; }
 
-@keyframes riseIn{
-  to{ opacity: 1; transform: translateY(0); }
-}
+@keyframes riseIn{ to{ opacity: 1; transform: translateY(0); } }
 
 @media (prefers-reduced-motion: reduce){
   .result-panel{ transition: none; }
   .result-panel.is-open [data-anim]{ animation: none; opacity:1; transform:none; }
 }
 
-/* =========================================================
-   Mobile Feinschliff (ohne Desktop zu zerstören)
-   ========================================================= */
+/* Mobile Feinschliff (dein alter Konfigurator) */
 @media (max-width: 920px){
   .cfg-row{ grid-template-columns: 1fr 1fr; }
   .metric-row{ grid-template-columns: 1fr; }
@@ -372,13 +358,17 @@
   .spec-grid{ grid-template-columns: 1fr; }
 }
 
-
+/* =========================================================
+   ECU WIDGET (xremover) – FIXES für Dark Theme + Mobile
+   Wichtig: HTML muss class="ecu-widget" am #ecuCalculateTool haben
+   ========================================================= */
 
 /* Wrapper fürs Fremd-Widget in deinem Design */
 .ecu-widget{
   width: 100%;
-  max-width: 980px;      /* oder 1100px – wie du willst */
+  max-width: 1100px;
   margin: 0 auto;
+  overflow: visible; /* nicht clippen -> Diagramm/Optionen bleiben sichtbar */
 }
 
 /* Falls das Widget eigene Abstände komisch setzt */
@@ -386,91 +376,47 @@
 .ecu-widget > div{
   max-width: 100% !important;
 }
-/* =========================================
-   ECU TOOL DARK MODE FIX
-   ========================================= */
 
-/* HP & TORQUE Labels dunkler / besser lesbar */
-#ecuCalculateTool .hp,
-#ecuCalculateTool .torque,
-#ecuCalculateTool .label,
-#ecuCalculateTool strong {
+/* Dark Mode / Kontrast: nur gezielt, nicht global */
+#ecuCalculateTool strong{
   color: #ffffff !important;
 }
 
-/* Zahlenfelder besserer Kontrast */
-#ecuCalculateTool input,
-#ecuCalculateTool .value,
-#ecuCalculateTool .result,
-#ecuCalculateTool .standard,
-#ecuCalculateTool .stage1,
-#ecuCalculateTool .difference {
-  color: #ffffff !important;
-  background-color: #111111 !important;
-  border: 1px solid #960000 !important;
-}
-
-/* Zusatzoptionen Text besser sichtbar */
-#ecuCalculateTool .option,
-#ecuCalculateTool .option span,
-#ecuCalculateTool .option-title,
+/* Zusatzoptionen / Texte lesbar */
 #ecuCalculateTool p,
-#ecuCalculateTool small {
+#ecuCalculateTool small{
   color: #e6e6e6 !important;
 }
 
-/* Graue Boxen dunkler */
-#ecuCalculateTool .box,
-#ecuCalculateTool .card,
-#ecuCalculateTool .item {
-  background-color: #151515 !important;
+/* Eingabe-Felder: Kontrast + Turbroos Red */
+#ecuCalculateTool select,
+#ecuCalculateTool input{
+  background-color: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #960000 !important;
 }
 
-/* Icons Bereich etwas sauberer */
-#ecuCalculateTool svg {
-  filter: brightness(1.1);
+/* Buttons */
+#ecuCalculateTool button{
+  background-color: #960000 !important;
+  color: #ffffff !important;
+  border: 1px solid #960000 !important;
 }
 
-/* Mobile Abstand */
-#ecuCalculateTool {
-  padding-bottom: 20px;
-}
-/* =========================================
-   ECU Widget – Mobile Fix (kein Abschneiden)
-   ========================================= */
-
-/* Widget darf nicht abgeschnitten werden */
-#ecuCalculateTool{
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: auto;                 /* Fallback: scroll statt cut */
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Alles im Widget sauber berechnen */
-#ecuCalculateTool,
-#ecuCalculateTool *{
-  box-sizing: border-box !important;
-  max-width: 100% !important;
-}
-
-/* Mobile: Elemente untereinander */
+/* Mobile: keine zerstörerischen *-Regeln, nur Inputs stacked + Fallback scroll */
 @media (max-width: 700px){
-
-  /* Viele Widgets nutzen Flex/Grid -> Wrap erzwingen */
-  #ecuCalculateTool [style*="display:flex"]{
-    flex-wrap: wrap !important;
+  .ecu-widget{
+    max-width: 100%;
   }
 
-  /* Typische “Spalten”-Klassen auf 100% Breite zwingen */
-  #ecuCalculateTool [class*="col"],
-  #ecuCalculateTool [class*="column"],
-  #ecuCalculateTool [class*="grid"],
-  #ecuCalculateTool [class*="row"]{
-    flex-wrap: wrap !important;
+  /* Falls intern 2 Spalten: lieber horizontal scroll als abgeschnitten */
+  #ecuCalculateTool{
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Eingabefelder & Selects volle Breite */
+  /* Inputs untereinander */
   #ecuCalculateTool select,
   #ecuCalculateTool input,
   #ecuCalculateTool button{
@@ -479,55 +425,12 @@
     display: block !important;
   }
 
-  /* Wenn es zwei “rote Felder” nebeneinander sind -> Abstand */
   #ecuCalculateTool select,
   #ecuCalculateTool input{
     margin-bottom: 10px !important;
   }
-}
-/* =========================================
-   ECU Widget – SAUBERER Mobile Fix (ohne Layout/Animation zu zerstören)
-   ========================================= */
 
-/* Deine Box soll alles sauber "abschneiden", damit nichts rechts raussteht */
-.cfg-shell{
-  overflow: hidden; /* verhindert den schwarzen Rand außerhalb der Box */
-}
-
-/* Wrapper um das Widget */
-.ecu-wrap{
-  width: 100%;
-  overflow: hidden;     /* clippt Überstände */
-}
-
-/* Standard: Widget normal, nichts aggressiv überschreiben */
-#ecuCalculateTool{
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-/* Mobile: Widget proportional verkleinern statt intern umzubauen */
-@media (max-width: 700px){
-  .ecu-wrap{
-    overflow: hidden;
-  }
-
-  /* Skalierung (0.86–0.95 je nach Geschmack) */
-  #ecuCalculateTool{
-    transform: scale(0.90);
-    transform-origin: top left;
-
-    /* Trick: damit es nach dem Scale trotzdem die volle Breite nutzt */
-    width: calc(100% / 0.90);
-    max-width: none;
-  }
-}
-
-/* Extra klein (iPhone SE etc.) */
-@media (max-width: 380px){
-  #ecuCalculateTool{
-    transform: scale(0.85);
-    width: calc(100% / 0.85);
+  #ecuCalculateTool button{
+    margin-top: 6px !important;
   }
 }

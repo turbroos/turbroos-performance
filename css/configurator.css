@@ -95,3 +95,48 @@
   background: #000 !important;
 }
 
+/* =========================================
+   ECU Widget – FINAL PATCH (nur Fixes)
+   1) Mobile: HP/TORQUE-Labels wieder sichtbar (Desktop-Layout erzwingen)
+   2) Difference-Werte: Blau -> Rot (Turbroos Rot)
+   ========================================= */
+
+/* 1) Mobile Fix: nichts mehr abschneiden, sondern swipebar machen */
+.ecu-wrap{
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* iPhone / Mobile: Widget bekommt "Desktop-Breite", Container darf horizontal scrollen */
+@media (max-width: 820px){
+  .ecu-wrap{
+    overflow-x: auto;                 /* statt abgeschnitten */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 18px;             /* damit es optisch sauber bleibt */
+  }
+
+  /* erzwingt, dass das Widget nicht in "Mobile Simplify Mode" fällt */
+  #ecuCalculateTool{
+    min-width: 980px;                /* wichtig: dadurch kommen HP/TORQUE-Boxen wieder */
+    max-width: none !important;
+  }
+}
+
+/* 2) Difference Farbe: alles was das Widget als "Difference" markiert */
+#ecuCalculateTool .difference,
+#ecuCalculateTool .difference * ,
+#ecuCalculateTool .diff,
+#ecuCalculateTool .diff * ,
+#ecuCalculateTool [class*="diff"],
+#ecuCalculateTool [class*="diff"] *{
+  color: #960000 !important;
+}
+
+/* Falls das Widget die Differenz per Inline-Style blau setzt (häufig auf Widgets) */
+#ecuCalculateTool [style*="color: rgb(0,"],
+#ecuCalculateTool [style*="color: #00"],
+#ecuCalculateTool [style*="color:#00"]{
+  color: #960000 !important;
+}

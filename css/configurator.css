@@ -1,5 +1,5 @@
 /* =========================================================
-   Konfigurator – Turbroos Layout + ECU Widget Fix (FINAL)
+   Konfigurator – Add-on CSS (Turbroos) + ECU Widget FIX
    ========================================================= */
 
 :root{
@@ -23,40 +23,94 @@
   border-radius: 20px;
   box-shadow: 0 0 70px rgba(0,0,0,0.65);
   padding: 18px;
+}
 
-  /* WICHTIG: NICHT hidden, sonst wird mobil abgeschnitten */
-  overflow: visible;
+/* Hint */
+.cfg-controls{ padding: 8px 12px 0; }
+.cfg-hint{
+  margin-top: 6px;
+  display:flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--cfg-soft2);
+  font-size: 13px;
+}
+.cfg-hint .dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(150,0,0,0.85);
+  box-shadow: 0 0 14px rgba(150,0,0,0.55);
 }
 
 /* =========================================================
-   ECU Widget Wrapper
+   ECU Widget – Card Styling (passt zum Rest)
    ========================================================= */
 
-/* Zentrierung + max Breite */
+.ecu-card{
+  margin-top: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.35);
+  overflow: hidden; /* nur die Card, nicht den Inhalt clippen wir hart */
+}
+
+.ecu-card-inner{
+  padding: 16px;
+}
+
+/* Desktop: passt in dein Layout */
 .ecu-widget{
   width: 100%;
-  max-width: 1100px;
+  max-width: 980px;      /* passt zu deinem Turbroos Layout */
   margin: 0 auto;
 }
 
-/* Nix global kaputt machen */
-.ecu-widget *{
-  box-sizing: border-box;
+/* =========================================================
+   Mobile Fix – NICHT abschneiden, sauber scrollen
+   (Widget bleibt intern intakt -> Diagramm bleibt korrekt)
+   ========================================================= */
+
+@media (max-width: 900px){
+  .ecu-card-inner{
+    padding: 12px;
+  }
+
+  /* Container scrollt horizontal, damit nix abgeschnitten wird */
+  .ecu-widget{
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  /* Widget-Inhalt darf breit sein (Widget ist auf 1100 gebaut) */
+  .ecu-widget > *{
+    display: inline-block;
+    min-width: 1100px;
+  }
 }
 
-/* Canvas/Diagramm darf NICHT weggedrückt werden */
-#ecuCalculateTool canvas,
-#ecuCalculateTool svg{
-  display: block;
-  height: auto;
+/* Extra klein */
+@media (max-width: 380px){
+  .ecu-widget > *{
+    min-width: 1180px; /* minimal mehr Luft auf sehr kleinen iPhones */
+  }
 }
 
 /* =========================================================
-   Zusatzoptionen – Text LESBAR machen
-   (Kacheln sind weiß -> Text muss dunkel sein)
+   Zusatzoptionen – Text lesbar machen (Kacheln sind weiß)
+   -> Wir machen NUR den Text in den Kacheln dunkel.
    ========================================================= */
 
-/* Alles was nach Option aussieht: dunkel + kräftig */
+/* Häufig sind die Option-Kacheln Buttons/Divs mit Icons + Label */
+#ecuCalculateTool button,
+#ecuCalculateTool [role="button"]{
+  color: #111;
+}
+
+/* Viele Widgets nutzen "Additional options" Bereich */
 #ecuCalculateTool [class*="option"],
 #ecuCalculateTool [class*="Option"],
 #ecuCalculateTool [class*="additional"],
@@ -64,51 +118,18 @@
   color: #111 !important;
 }
 
-/* Labels in den weißen Kästchen */
-#ecuCalculateTool [class*="option"] *,
-#ecuCalculateTool [class*="Option"] *,
-#ecuCalculateTool [class*="additional"] *,
-#ecuCalculateTool [class*="Additional"] *{
+/* Labels unter den Icons */
+#ecuCalculateTool [class*="option"] span,
+#ecuCalculateTool [class*="Option"] span,
+#ecuCalculateTool [class*="additional"] span,
+#ecuCalculateTool [class*="Additional"] span,
+#ecuCalculateTool [class*="option"] small,
+#ecuCalculateTool [class*="Option"] small{
   color: #111 !important;
   font-weight: 800 !important;
 }
 
-/* Falls das Widget die Kacheln als Buttons/Divs rendert */
-#ecuCalculateTool button,
-#ecuCalculateTool .btn,
-#ecuCalculateTool [role="button"]{
-  font-family: inherit;
-}
-
 /* =========================================================
-   MOBILE – FINAL: passt auf iPhone ohne Abschneiden
-   -> Wir skalieren den kompletten Widget-Block
+   Wichtig: KEINE aggressiven globalen max-width Regeln!
+   (sonst verschwinden Charts/Canvas)
    ========================================================= */
-
-.ecu-scale{
-  width: 100%;
-  overflow: visible;
-}
-
-/* iPhone / Mobile */
-@media (max-width: 820px){
-  .ecu-scale{
-    /* nichts abschneiden */
-    overflow: visible;
-  }
-
-  /* Scale runter, damit es komplett reinpasst */
-  .ecu-scale{
-    transform: scale(0.88);
-    transform-origin: top left;
-    width: calc(100% / 0.88);
-  }
-}
-
-/* Extra kleine Geräte (SE etc.) */
-@media (max-width: 380px){
-  .ecu-scale{
-    transform: scale(0.82);
-    width: calc(100% / 0.82);
-  }
-}

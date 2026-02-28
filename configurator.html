@@ -7,9 +7,29 @@
 
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/configurator.css" />
+
+  <!-- Widget Anpassung für Turbroos Design -->
+  <style>
+    #ecuCalculateTool{
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    #ecuCalculateTool iframe,
+    #ecuCalculateTool > div{
+      max-width: 100% !important;
+    }
+
+    /* optional: etwas Abstand innen */
+    .cfg-shell{
+      padding: 25px;
+    }
+  </style>
 </head>
 
 <body class="page-configurator">
+
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html">
@@ -18,150 +38,27 @@
 
     <nav class="nav">
       <a href="index.html">Home</a>
-      <a href="configurator.html" class="active" aria-current="page">Konfigurator</a>
+      <a href="configurator.html" class="active">Konfigurator</a>
       <a href="about.html">Über uns</a>
       <a href="legal.html">Rechtliches</a>
     </nav>
-
-    <div class="lang-switch" aria-hidden="true" style="opacity:0; pointer-events:none;">
-      <button class="lang-btn" type="button">DE</button>
-      <button class="lang-btn" type="button">EN</button>
-    </div>
   </div>
 </header>
 
 <main class="container section config-page">
+
   <h1 class="page-title">Fahrzeug-Konfigurator</h1>
   <p class="muted readable">
-    Wähle Marke, Modell, Generation/Baujahr und Motorisierung. Alle Werte sind unverbindliche Richtwerte.
+    Wähle Marke, Modell, Baujahr und Motorisierung.
   </p>
 
   <div class="cfg-shell">
-    <div class="cfg-controls">
-      <div class="cfg-row">
-        <label class="cfg-field">
-          <span>Marke</span>
-          <select id="selBrand">
-            <option value="">Bitte wählen…</option>
-          </select>
-        </label>
 
-        <label class="cfg-field">
-          <span>Modell</span>
-          <select id="selModel" disabled>
-            <option value="">Bitte wählen…</option>
-          </select>
-        </label>
+    <!-- ECU Tool Container -->
+    <div id="ecuCalculateTool"></div>
 
-        <label class="cfg-field">
-          <span>Generation / Baujahr</span>
-          <select id="selGen" disabled>
-            <option value="">Bitte wählen…</option>
-          </select>
-        </label>
-
-        <label class="cfg-field">
-          <span>Motorisierung</span>
-          <select id="selEngine" disabled>
-            <option value="">Bitte wählen…</option>
-          </select>
-        </label>
-      </div>
-    </div>
-
-    <!-- Ergebnis -->
-    <section id="resultPanel" class="result-panel" aria-hidden="true">
-      <div class="result-head">
-        <div class="result-title">
-          <div class="badge">Chiptuning-Berechnungstool</div>
-          <h2 id="vehicleTitle">—</h2>
-          <p id="vehicleSub" class="muted"></p>
-        </div>
-
-        <a class="btn-primary result-cta" href="https://wa.me/491234567890" target="_blank" rel="noopener">
-          Anfrage per WhatsApp
-        </a>
-      </div>
-
-      <div class="result-grid">
-        <div class="metric-stack">
-          <div class="metric-row">
-            <div class="metric-label">Leistung (PS)</div>
-            <div class="metric-cards">
-              <div class="mcard" data-anim="1">
-                <div class="mcap">Serie</div>
-                <div class="mval"><span id="psStd">—</span><small>PS</small></div>
-              </div>
-              <div class="mcard" data-anim="2">
-                <div class="mcap">Stage 1</div>
-                <div class="mval"><span id="psStg">—</span><small>PS</small></div>
-              </div>
-              <div class="mcard" data-anim="3">
-                <div class="mcap">Differenz</div>
-                <div class="mval diff"><span id="psDiff">—</span><small>PS</small></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="metric-row">
-            <div class="metric-label">Drehmoment (Nm)</div>
-            <div class="metric-cards">
-              <div class="mcard" data-anim="4">
-                <div class="mcap">Serie</div>
-                <div class="mval"><span id="nmStd">—</span><small>Nm</small></div>
-              </div>
-              <div class="mcard" data-anim="5">
-                <div class="mcap">Stage 1</div>
-                <div class="mval"><span id="nmStg">—</span><small>Nm</small></div>
-              </div>
-              <div class="mcard" data-anim="6">
-                <div class="mcap">Differenz</div>
-                <div class="mval diff"><span id="nmDiff">—</span><small>Nm</small></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="chart-card" data-anim="7">
-          <div class="chart-top">
-            <div class="chart-title">Leistungsdiagramm (Serie vs Stage 1)</div>
-            <div class="chart-legend">
-              <span class="lg lg-ps-std">Serie PS</span>
-              <span class="lg lg-ps-stg">Stage 1 PS</span>
-              <span class="lg lg-nm-std">Serie Nm</span>
-              <span class="lg lg-nm-stg">Stage 1 Nm</span>
-            </div>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="perfChart" width="980" height="420"></canvas>
-          </div>
-        </div>
-
-        <!-- Zusatzoptionen (nur sichtbar, wenn in DB vorhanden) -->
-        <div id="optionCard" class="spec-card" data-anim="9" hidden>
-          <div class="spec-title">Zusatzoptionen</div>
-          <div id="optionGrid" class="spec-grid"></div>
-        </div>
-
-        <div class="spec-card" data-anim="8">
-          <div class="spec-title">Motor-Daten</div>
-          <div class="spec-grid">
-            <div class="spec-item"><span>Kraftstoff</span><strong id="spFuel">—</strong></div>
-            <div class="spec-item"><span>Verdichtungsverhältnis</span><strong id="spCompression">—</strong></div>
-            <div class="spec-item"><span>Typ</span><strong id="spType">—</strong></div>
-            <div class="spec-item"><span>Hubraum</span><strong id="spDisp">—</strong></div>
-            <div class="spec-item"><span>ECU</span><strong id="spEcu">—</strong></div>
-            <div class="spec-item"><span>Motorkennbuchst.</span><strong id="spEngineCode">—</strong></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="result-foot">
-        <div class="cta-note">Individuelle Softwareanpassung – keine Pauschalsoftware.</div>
-        <div class="legal-hint">* Alle Werte sind unverbindliche Richtwerte. Stage 2 nur auf Anfrage.</div>
-      </div>
-    </section>
   </div>
+
 </main>
 
 <footer class="footer">
@@ -178,10 +75,27 @@
   </div>
 </footer>
 
-<script src="./js/db.js"></script>
-<script src="./js/logic.js"></script>
+<!-- ECU TOOL SCRIPT -->
+<script>
+  window.$ecu = {
+    lang: "de",
+    width: "100%",
+    BackgroundColor: "#000000",
+    BoxColor: "#960000",
+    FontColor: "#ffffff",
+    ButtonColor: "#960000",
+    ButtonFontColor: "#ffffff",
+    APIID: ""   // Falls du später einen API Key bekommst, hier einfügen
+  };
+
+  (function() {
+    const d = document;
+    const s = d.createElement("script");
+    s.src = "https://xremover.net/calculator/ecuob.js?_=" + Date.now();
+    s.async = true;
+    d.body.appendChild(s);
+  })();
+</script>
 
 </body>
 </html>
-
-

@@ -73,3 +73,25 @@
   .cfg-shell{ padding: 14px; }
   .cfg-widget-head{ padding-bottom: 10px; }
 }
+/* ===== XRemover: White-Background Fix (nur echte Weiß-Flächen überschreiben) ===== */
+
+#ecuCalculateTool{
+  background: #000 !important;
+}
+
+/* Falls XRemover Inline-Styles setzt (typisch Ursache für den weißen Block) */
+#ecuCalculateTool [style*="background:#fff"],
+#ecuCalculateTool [style*="background: #fff"],
+#ecuCalculateTool [style*="background-color:#fff"],
+#ecuCalculateTool [style*="background-color: #fff"],
+#ecuCalculateTool [style*="background-color:rgb(255,255,255)"],
+#ecuCalculateTool [style*="background-color: rgb(255, 255, 255)"]{
+  background: #000 !important;
+  background-color: #000 !important;
+}
+
+/* Falls da ein Wrapper-DIV direkt darunter weiß ist */
+#ecuCalculateTool > div{
+  background: #000 !important;
+}
+

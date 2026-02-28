@@ -371,3 +371,18 @@
   .metric-cards{ grid-template-columns: 1fr; }
   .spec-grid{ grid-template-columns: 1fr; }
 }
+
+
+
+/* Wrapper fürs Fremd-Widget in deinem Design */
+.ecu-widget{
+  width: 100%;
+  max-width: 980px;      /* oder 1100px – wie du willst */
+  margin: 0 auto;
+}
+
+/* Falls das Widget eigene Abstände komisch setzt */
+.ecu-widget iframe,
+.ecu-widget > div{
+  max-width: 100% !important;
+}

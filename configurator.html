@@ -38,8 +38,18 @@
   </p>
 
   <div class="cfg-shell">
+
     <!-- ECU Tool Container -->
     <div id="ecuCalculateTool" class="ecu-widget"></div>
+
+    <!-- Eigenes Leistungsdiagramm (aus Widget-Werten) -->
+    <section id="tpChartCard" class="tp-chart-card" hidden>
+      <div class="tp-chart-title">Leistungsdiagramm (Serie vs Stage 1)</div>
+      <div class="tp-chart-wrap">
+        <canvas id="tpPerfChart" width="980" height="420"></canvas>
+      </div>
+    </section>
+
   </div>
 </main>
 
@@ -75,6 +85,130 @@
     s.src = "https://xremover.net/calculator/ecuob.js?_=" + Date.now();
     s.async = true;
     document.body.appendChild(s);
+  })();
+</script>
+
+<!-- Chart Script: liest HP/Nm aus dem Widget und zeichnet ein Diagramm -->
+<script>
+  (function(){
+    const root = document.getElementById("ecuCalculateTool");
+    const card = document.getElementById("tpChartCard");
+    const canvas = document.getElementById("tpPerfChart");
+    const ctx = canvas.getContext("2d");
+
+    function extractValues(){
+      // Text aus Widget ziehen
+      const txt = (root.innerText || "").replace(/\u00A0/g, " ");
+
+      // Wir suchen Sequenzen wie: 163hp 205hp 42hp und 350Nm 430Nm 80Nm
+      const hpMatches = [...txt.matchAll(/(\d+)\s*hp/ig)].map(m => parseInt(m[1],10));
+      const nmMatches = [...txt.matchAll(/(\d+)\s*nm/ig)].map(m => parseInt(m[1],10));
+
+      // Heuristik: die ersten 3 sind meist Standard, Stage1, Difference
+      if(hpMatches.length >= 2 && nmMatches.length >= 2){
+        const hpStd = hpMatches[0], hpStg = hpMatches[1];
+        const nmStd = nmMatches[0], nmStg = nmMatches[1];
+
+        // Falls Diff existiert, nehmen wir sie – sonst rechnen wir
+        const hpDiff = hpMatches[2] ?? (hpStg - hpStd);
+        const nmDiff = nmMatches[2] ?? (nmStg - nmStd);
+
+        return { hpStd, hpStg, hpDiff, nmStd, nmStg, nmDiff };
+      }
+      return null;
+    }
+
+    function clear(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+
+    function drawChart(v){
+      clear();
+
+      // Simple Balken-Chart (HP & Nm jeweils Standard vs Stage1)
+      // Layout
+      const W = canvas.width, H = canvas.height;
+      const pad = 60;
+      const mid = H/2;
+
+      ctx.fillStyle = "rgba(255,255,255,0.88)";
+      ctx.font = "900 20px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.fillText("HP (PS) & TORQUE (Nm) — Serie vs Stage 1", pad, 38);
+
+      // Skalen (max)
+      const maxHP = Math.max(v.hpStd, v.hpStg) * 1.15;
+      const maxNM = Math.max(v.nmStd, v.nmStg) * 1.15;
+
+      // Achsen
+      ctx.strokeStyle = "rgba(255,255,255,0.20)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(pad, mid - 40); ctx.lineTo(W - pad, mid - 40);
+      ctx.moveTo(pad, H - pad);  ctx.lineTo(W - pad, H - pad);
+      ctx.stroke();
+
+      // Balken-Funktion
+      function bar(x, baseY, value, max, label){
+        const bw = 220;
+        const bh = Math.max(8, (value / max) * 140);
+
+        // Balken (dunkelgrau)
+        ctx.fillStyle = "rgba(255,255,255,0.14)";
+        ctx.fillRect(x, baseY - 140, bw, 140);
+
+        // Balken (rot)
+        ctx.fillStyle = "rgba(150,0,0,0.85)";
+        ctx.fillRect(x, baseY - bh, bw, bh);
+
+        // Text
+        ctx.fillStyle = "rgba(255,255,255,0.88)";
+        ctx.font = "900 18px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+        ctx.fillText(label, x, baseY + 26);
+
+        ctx.font = "800 18px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+        ctx.fillText(String(value), x, baseY - bh - 10);
+      }
+
+      // HP oben (2 Balken)
+      const baseHP = mid - 40;
+      bar(pad, baseHP, v.hpStd, maxHP, "HP Serie");
+      bar(pad + 260, baseHP, v.hpStg, maxHP, "HP Stage 1");
+
+      // NM unten (2 Balken)
+      const baseNM = H - pad;
+      bar(pad, baseNM, v.nmStd, maxNM, "Nm Serie");
+      bar(pad + 260, baseNM, v.nmStg, maxNM, "Nm Stage 1");
+
+      // Diff rechts
+      ctx.fillStyle = "rgba(255,255,255,0.75)";
+      ctx.font = "900 18px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.fillText(`Δ HP: ${v.hpDiff}hp`, W - pad - 220, 84);
+      ctx.fillText(`Δ Nm: ${v.nmDiff}Nm`, W - pad - 220, 112);
+    }
+
+    // Beobachte Änderungen im Widget (nach “Analyse”)
+    let t = null;
+    const obs = new MutationObserver(() => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        const vals = extractValues();
+        if(vals){
+          card.hidden = false;
+          drawChart(vals);
+        }
+      }, 250);
+    });
+
+    obs.observe(root, { subtree:true, childList:true, characterData:true });
+
+    // Initial check (falls schon Werte da sind)
+    setTimeout(() => {
+      const vals = extractValues();
+      if(vals){
+        card.hidden = false;
+        drawChart(vals);
+      }
+    }, 1500);
   })();
 </script>
 

@@ -7,25 +7,6 @@
 
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/configurator.css" />
-
-  <!-- Widget Anpassung für Turbroos Design -->
-  <style>
-    #ecuCalculateTool{
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    #ecuCalculateTool iframe,
-    #ecuCalculateTool > div{
-      max-width: 100% !important;
-    }
-
-    /* optional: etwas Abstand innen */
-    .cfg-shell{
-      padding: 25px;
-    }
-  </style>
 </head>
 
 <body class="page-configurator">
@@ -38,27 +19,28 @@
 
     <nav class="nav">
       <a href="index.html">Home</a>
-      <a href="configurator.html" class="active">Konfigurator</a>
+      <a href="configurator.html" class="active" aria-current="page">Konfigurator</a>
       <a href="about.html">Über uns</a>
       <a href="legal.html">Rechtliches</a>
     </nav>
+
+    <div class="lang-switch" aria-hidden="true" style="opacity:0; pointer-events:none;">
+      <button class="lang-btn" type="button">DE</button>
+      <button class="lang-btn" type="button">EN</button>
+    </div>
   </div>
 </header>
 
 <main class="container section config-page">
-
   <h1 class="page-title">Fahrzeug-Konfigurator</h1>
   <p class="muted readable">
     Wähle Marke, Modell, Baujahr und Motorisierung.
   </p>
 
   <div class="cfg-shell">
-
     <!-- ECU Tool Container -->
-   <div class="ecu-wrap">
-  <div id="ecuCalculateTool"></div>
-</div>
-
+    <div id="ecuCalculateTool" class="ecu-widget"></div>
+  </div>
 </main>
 
 <footer class="footer">
@@ -85,18 +67,16 @@
     FontColor: "#ffffff",
     ButtonColor: "#960000",
     ButtonFontColor: "#ffffff",
-    APIID: ""   // Falls du später einen API Key bekommst, hier einfügen
+    APIID: ""
   };
 
-  (function() {
-    const d = document;
-    const s = d.createElement("script");
+  (function () {
+    const s = document.createElement("script");
     s.src = "https://xremover.net/calculator/ecuob.js?_=" + Date.now();
     s.async = true;
-    d.body.appendChild(s);
+    document.body.appendChild(s);
   })();
 </script>
 
 </body>
 </html>
-

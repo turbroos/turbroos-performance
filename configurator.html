@@ -10,6 +10,7 @@
 </head>
 
 <body class="page-configurator">
+
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html">
@@ -33,24 +34,19 @@
 <main class="container section config-page">
   <h1 class="page-title">Fahrzeug-Konfigurator</h1>
   <p class="muted readable">
-    Wähle Marke, Modell, Baujahr und Motorisierung.
+    Wähle Marke, Modell, Baujahr und Motorisierung. Alle Werte sind unverbindliche Richtwerte.
   </p>
 
-  <!-- Turbroos Card -->
   <div class="cfg-shell">
-    <div class="cfg-controls">
-      <div class="cfg-hint">
-        <span class="dot"></span>
-        <span>Chiptuning-Berechnungstool (Widget)</span>
-      </div>
+    <div class="cfg-widget-head">
+      <span class="cfg-dot" aria-hidden="true"></span>
+      <span>Chiptuning-Berechnungstool (Widget)</span>
     </div>
 
-    <!-- WIDGET CARD (passt zum Design) -->
-    <section class="ecu-card">
-      <div class="ecu-card-inner">
-        <div id="ecuCalculateTool" class="ecu-widget"></div>
-      </div>
-    </section>
+    <!-- WICHTIG: Wrapper + Tool Container -->
+    <div class="ecu-widget">
+      <div id="ecuCalculateTool"></div>
+    </div>
   </div>
 </main>
 
@@ -70,15 +66,17 @@
 
 <!-- ECU TOOL SCRIPT -->
 <script>
+  // Empfehlung: width NICHT "100%" (das macht bei manchen Widgets Chaos),
+  // sondern ein "Basis-Layout" und wir machen den Rest per CSS responsiv.
   window.$ecu = {
     lang: "de",
-    width: "1100",                 // interne Layoutbreite vom Widget
+    width: "1100",
     BackgroundColor: "#000000",
     BoxColor: "#960000",
     FontColor: "#ffffff",
     ButtonColor: "#960000",
     ButtonFontColor: "#ffffff",
-    APIID: ""
+    APIID: "" // falls du später einen Key bekommst
   };
 
   (function () {

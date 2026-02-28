@@ -10,7 +10,6 @@
 </head>
 
 <body class="page-configurator">
-
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html">
@@ -37,11 +36,21 @@
     Wähle Marke, Modell, Baujahr und Motorisierung.
   </p>
 
+  <!-- Turbroos Card -->
   <div class="cfg-shell">
-    <!-- WICHTIG: Wrapper für Mobile-Scaling -->
-    <div class="ecu-scale">
-      <div id="ecuCalculateTool" class="ecu-widget"></div>
+    <div class="cfg-controls">
+      <div class="cfg-hint">
+        <span class="dot"></span>
+        <span>Chiptuning-Berechnungstool (Widget)</span>
+      </div>
     </div>
+
+    <!-- WIDGET CARD (passt zum Design) -->
+    <section class="ecu-card">
+      <div class="ecu-card-inner">
+        <div id="ecuCalculateTool" class="ecu-widget"></div>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -63,7 +72,7 @@
 <script>
   window.$ecu = {
     lang: "de",
-    width: "1100",
+    width: "1100",                 // interne Layoutbreite vom Widget
     BackgroundColor: "#000000",
     BoxColor: "#960000",
     FontColor: "#ffffff",

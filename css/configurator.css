@@ -435,3 +435,53 @@
 #ecuCalculateTool {
   padding-bottom: 20px;
 }
+/* =========================================
+   ECU Widget – Mobile Fix (kein Abschneiden)
+   ========================================= */
+
+/* Widget darf nicht abgeschnitten werden */
+#ecuCalculateTool{
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto;                 /* Fallback: scroll statt cut */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Alles im Widget sauber berechnen */
+#ecuCalculateTool,
+#ecuCalculateTool *{
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+}
+
+/* Mobile: Elemente untereinander */
+@media (max-width: 700px){
+
+  /* Viele Widgets nutzen Flex/Grid -> Wrap erzwingen */
+  #ecuCalculateTool [style*="display:flex"]{
+    flex-wrap: wrap !important;
+  }
+
+  /* Typische “Spalten”-Klassen auf 100% Breite zwingen */
+  #ecuCalculateTool [class*="col"],
+  #ecuCalculateTool [class*="column"],
+  #ecuCalculateTool [class*="grid"],
+  #ecuCalculateTool [class*="row"]{
+    flex-wrap: wrap !important;
+  }
+
+  /* Eingabefelder & Selects volle Breite */
+  #ecuCalculateTool select,
+  #ecuCalculateTool input,
+  #ecuCalculateTool button{
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+
+  /* Wenn es zwei “rote Felder” nebeneinander sind -> Abstand */
+  #ecuCalculateTool select,
+  #ecuCalculateTool input{
+    margin-bottom: 10px !important;
+  }
+}

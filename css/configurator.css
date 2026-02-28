@@ -1,5 +1,5 @@
 /* =========================================================
-   Konfigurator – nur Add-on CSS (keine Desktop-Styles zerstören)
+   Konfigurator – Turbroos Layout + ECU Widget Fix (FINAL)
    ========================================================= */
 
 :root{
@@ -8,7 +8,7 @@
   --cfg-stroke: rgba(255,255,255,0.10);
   --cfg-soft: rgba(255,255,255,0.88);
   --cfg-soft2: rgba(255,255,255,0.78);
-  --cfg-red: #8b0000;
+  --cfg-red: #960000;
 }
 
 /* Seite */
@@ -24,477 +24,91 @@
   box-shadow: 0 0 70px rgba(0,0,0,0.65);
   padding: 18px;
 
-  /* WICHTIG: NICHT clippen, sonst verschwinden Diagramm/Optionen im Widget */
+  /* WICHTIG: NICHT hidden, sonst wird mobil abgeschnitten */
   overflow: visible;
 }
 
-/* Controls (dein eigener alter Konfigurator – bleibt drin) */
-.cfg-controls{ padding: 14px 14px 6px; }
-
-.cfg-row{
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0,1fr));
-  gap: 12px;
-  align-items: end;
-}
-
-.cfg-field{
-  display:flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
-}
-
-.cfg-field span{
-  font-weight: 800;
-  color: var(--cfg-soft);
-  font-size: 13px;
-  letter-spacing: .2px;
-}
-
-.cfg-field select{
-  width: 100%;
-  padding: 12px 12px;
-  border-radius: 14px;
-  background: rgba(0,0,0,0.55);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: var(--cfg-soft);
-  font-weight: 800;
-  outline: none;
-}
-
-.cfg-field select:disabled{
-  opacity: .45;
-  cursor: not-allowed;
-}
-
-.cfg-hint{
-  margin-top: 12px;
-  display:flex;
-  gap: 10px;
-  align-items: center;
-  color: var(--cfg-soft2);
-  font-size: 13px;
-}
-
-.cfg-hint .dot{
-  width: 8px;
-  height: 8px;
-  border-radius: 99px;
-  background: rgba(139,0,0,0.8);
-  box-shadow: 0 0 14px rgba(139,0,0,0.55);
-}
-
 /* =========================================================
-   Result Panel – dein alter Konfigurator (bleibt drin)
-   ========================================================= */
-.result-panel{
-  margin-top: 14px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(0,0,0,0.35);
-  overflow: hidden;
-
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: max-height 520ms ease, opacity 260ms ease, transform 260ms ease;
-}
-
-.result-panel.is-open{
-  max-height: 2200px;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Header inside results */
-.result-head{
-  padding: 18px;
-  display:flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.10);
-  font-weight: 900;
-  color: var(--cfg-soft);
-  width: fit-content;
-}
-
-.result-title h2{
-  margin: 10px 0 4px;
-  font-size: 22px;
-  color: var(--cfg-soft);
-}
-
-.result-title p{
-  margin: 0;
-  color: var(--cfg-soft2);
-}
-
-.result-cta{ white-space: nowrap; }
-
-/* Grid content */
-.result-grid{
-  padding: 0 18px 18px;
-  display:grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-
-/* Metrics */
-.metric-stack{
-  display:flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.metric-row{
-  display:grid;
-  grid-template-columns: 170px 1fr;
-  gap: 14px;
-  align-items: center;
-}
-
-.metric-label{
-  font-weight: 900;
-  color: var(--cfg-soft);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 16px;
-  padding: 16px 14px;
-}
-
-.metric-cards{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 12px;
-}
-
-.mcard{
-  padding: 14px;
-  border-radius: 16px;
-  background: rgba(0,0,0,0.45);
-  border: 1px solid rgba(255,255,255,0.12);
-  transform: translateY(8px);
-  opacity: 0;
-}
-
-.mcap{
-  color: var(--cfg-soft2);
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: .2px;
-}
-
-.mval{
-  margin-top: 10px;
-  display:flex;
-  align-items: baseline;
-  gap: 6px;
-  font-weight: 950;
-  color: var(--cfg-soft);
-  font-size: 28px;
-}
-
-.mval small{
-  font-size: 12px;
-  color: var(--cfg-soft2);
-  font-weight: 900;
-}
-
-.mval.diff{ color: rgba(255,255,255,0.92); }
-
-/* Chart */
-.chart-card{
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(0,0,0,0.42);
-  border: 1px solid rgba(255,255,255,0.12);
-  transform: translateY(8px);
-  opacity: 0;
-}
-
-.chart-top{
-  display:flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-}
-
-.chart-title{
-  font-weight: 950;
-  color: var(--cfg-soft);
-}
-
-.chart-legend{
-  display:flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  font-weight: 800;
-  color: var(--cfg-soft2);
-  font-size: 12px;
-}
-
-.lg::before{
-  content:"";
-  display:inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  margin-right: 6px;
-  vertical-align: -1px;
-}
-
-.lg-ps-std::before { background: #f1c40f; }
-.lg-ps-stg::before { background: #ffd56a; }
-.lg-nm-std::before { background: #ff2b2b; }
-.lg-nm-stg::before { background: #ff6a6a; }
-
-.chart-wrap{
-  width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(0,0,0,0.55);
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-#perfChart{
-  width: 100%;
-  height: auto;
-  display:block;
-}
-
-/* Specs */
-.spec-card{
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(0,0,0,0.42);
-  border: 1px solid rgba(255,255,255,0.12);
-  transform: translateY(8px);
-  opacity: 0;
-}
-
-.spec-title{
-  font-weight: 950;
-  color: var(--cfg-soft);
-  margin-bottom: 12px;
-}
-
-.spec-grid{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 12px;
-}
-
-.spec-item{
-  padding: 12px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-.spec-item span{
-  display:block;
-  color: var(--cfg-soft2);
-  font-weight: 800;
-  font-size: 12px;
-  margin-bottom: 6px;
-}
-
-.spec-item strong{
-  color: var(--cfg-soft);
-  font-weight: 950;
-}
-
-.result-foot{
-  padding: 0 18px 18px;
-  text-align: center;
-}
-
-/* Animations */
-.result-panel.is-open [data-anim]{ animation: riseIn 520ms ease forwards; }
-.result-panel.is-open [data-anim="1"]{ animation-delay: 60ms; }
-.result-panel.is-open [data-anim="2"]{ animation-delay: 120ms; }
-.result-panel.is-open [data-anim="3"]{ animation-delay: 180ms; }
-.result-panel.is-open [data-anim="4"]{ animation-delay: 240ms; }
-.result-panel.is-open [data-anim="5"]{ animation-delay: 300ms; }
-.result-panel.is-open [data-anim="6"]{ animation-delay: 360ms; }
-.result-panel.is-open [data-anim="7"]{ animation-delay: 420ms; }
-.result-panel.is-open [data-anim="8"]{ animation-delay: 480ms; }
-
-@keyframes riseIn{ to{ opacity: 1; transform: translateY(0); } }
-
-@media (prefers-reduced-motion: reduce){
-  .result-panel{ transition: none; }
-  .result-panel.is-open [data-anim]{ animation: none; opacity:1; transform:none; }
-}
-
-/* Mobile Feinschliff (dein alter Konfigurator) */
-@media (max-width: 920px){
-  .cfg-row{ grid-template-columns: 1fr 1fr; }
-  .metric-row{ grid-template-columns: 1fr; }
-  .metric-label{ padding: 12px 14px; }
-  .spec-grid{ grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 560px){
-  .cfg-shell{ padding: 14px; }
-  .cfg-controls{ padding: 10px 10px 0; }
-  .cfg-row{ grid-template-columns: 1fr; }
-  .result-head{ flex-direction: column; align-items: stretch; }
-  .result-cta{ width: 100%; justify-content: center; }
-  .metric-cards{ grid-template-columns: 1fr; }
-  .spec-grid{ grid-template-columns: 1fr; }
-}
-
-/* =========================================================
-   ECU WIDGET (xremover) – FIXES für Dark Theme + Mobile
-   Wichtig: HTML muss class="ecu-widget" am #ecuCalculateTool haben
+   ECU Widget Wrapper
    ========================================================= */
 
-/* Wrapper fürs Fremd-Widget in deinem Design */
-.ecu-widget{
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  overflow: visible; /* nicht clippen -> Diagramm/Optionen bleiben sichtbar */
-}
-
-/* Falls das Widget eigene Abstände komisch setzt */
-.ecu-widget iframe,
-.ecu-widget > div{
-  max-width: 100% !important;
-}
-
-/* Dark Mode / Kontrast: nur gezielt, nicht global */
-#ecuCalculateTool strong{
-  color: #ffffff !important;
-}
-
-/* Zusatzoptionen / Texte lesbar */
-#ecuCalculateTool p,
-#ecuCalculateTool small{
-  color: #e6e6e6 !important;
-}
-
-/* Eingabe-Felder: Kontrast + Turbroos Red */
-#ecuCalculateTool select,
-#ecuCalculateTool input{
-  background-color: #111111 !important;
-  color: #ffffff !important;
-  border: 1px solid #960000 !important;
-}
-
-/* Buttons */
-#ecuCalculateTool button{
-  background-color: #960000 !important;
-  color: #ffffff !important;
-  border: 1px solid #960000 !important;
-}
-
-/* Mobile: keine zerstörerischen *-Regeln, nur Inputs stacked + Fallback scroll */
-@media (max-width: 700px){
-  .ecu-widget{
-    max-width: 100%;
-  }
-
-  /* Falls intern 2 Spalten: lieber horizontal scroll als abgeschnitten */
-  #ecuCalculateTool{
-    overflow-x: auto !important;
-    overflow-y: visible !important;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Inputs untereinander */
-  #ecuCalculateTool select,
-  #ecuCalculateTool input,
-  #ecuCalculateTool button{
-    width: 100% !important;
-    max-width: 100% !important;
-    display: block !important;
-  }
-
-  #ecuCalculateTool select,
-  #ecuCalculateTool input{
-    margin-bottom: 10px !important;
-  }
-
-  #ecuCalculateTool button{
-    margin-top: 6px !important;
-  }
-}
-
-/* =========================================================
-   XRemover ECU Widget – RESPONSIVE FIX (ohne Layout zu zerstören)
-   ========================================================= */
-
-/* Widget sitzt sauber in deinem Design */
+/* Zentrierung + max Breite */
 .ecu-widget{
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
 }
 
-/* Verhindert, dass das Widget die Seite sprengt */
+/* Nix global kaputt machen */
 .ecu-widget *{
   box-sizing: border-box;
 }
 
-/* Mobile: nicht abschneiden -> horizontal scrollen IN DER BOX */
-@media (max-width: 820px){
-  .ecu-widget{
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 10px; /* damit Scrollbar nicht stört */
-  }
-
-  /* Wir geben dem Widget eine Mindestbreite,
-     damit Safari nicht "komisch" umbrechen will. */
-  .ecu-widget > :first-child{
-    min-width: 980px;      /* Desktop-Breite vom Widget */
-    display: inline-block; /* wichtig für overflow-x */
-  }
+/* Canvas/Diagramm darf NICHT weggedrückt werden */
+#ecuCalculateTool canvas,
+#ecuCalculateTool svg{
+  display: block;
+  height: auto;
 }
 
 /* =========================================================
-   Eigenes Leistungsdiagramm (unter dem Widget)
+   Zusatzoptionen – Text LESBAR machen
+   (Kacheln sind weiß -> Text muss dunkel sein)
    ========================================================= */
-.tp-chart-card{
-  margin-top: 14px;
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(0,0,0,0.42);
-  border: 1px solid rgba(255,255,255,0.12);
+
+/* Alles was nach Option aussieht: dunkel + kräftig */
+#ecuCalculateTool [class*="option"],
+#ecuCalculateTool [class*="Option"],
+#ecuCalculateTool [class*="additional"],
+#ecuCalculateTool [class*="Additional"]{
+  color: #111 !important;
 }
 
-.tp-chart-title{
-  font-weight: 950;
-  color: rgba(255,255,255,0.88);
-  margin-bottom: 10px;
+/* Labels in den weißen Kästchen */
+#ecuCalculateTool [class*="option"] *,
+#ecuCalculateTool [class*="Option"] *,
+#ecuCalculateTool [class*="additional"] *,
+#ecuCalculateTool [class*="Additional"] *{
+  color: #111 !important;
+  font-weight: 800 !important;
 }
 
-.tp-chart-wrap{
+/* Falls das Widget die Kacheln als Buttons/Divs rendert */
+#ecuCalculateTool button,
+#ecuCalculateTool .btn,
+#ecuCalculateTool [role="button"]{
+  font-family: inherit;
+}
+
+/* =========================================================
+   MOBILE – FINAL: passt auf iPhone ohne Abschneiden
+   -> Wir skalieren den kompletten Widget-Block
+   ========================================================= */
+
+.ecu-scale{
   width: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(0,0,0,0.55);
-  border: 1px solid rgba(255,255,255,0.10);
+  overflow: visible;
 }
 
-#tpPerfChart{
-  width: 100%;
-  height: auto;
-  display: block;
+/* iPhone / Mobile */
+@media (max-width: 820px){
+  .ecu-scale{
+    /* nichts abschneiden */
+    overflow: visible;
+  }
+
+  /* Scale runter, damit es komplett reinpasst */
+  .ecu-scale{
+    transform: scale(0.88);
+    transform-origin: top left;
+    width: calc(100% / 0.88);
+  }
+}
+
+/* Extra kleine Geräte (SE etc.) */
+@media (max-width: 380px){
+  .ecu-scale{
+    transform: scale(0.82);
+    width: calc(100% / 0.82);
+  }
 }

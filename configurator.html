@@ -10,7 +10,6 @@
 </head>
 
 <body class="page-configurator">
-
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html">
@@ -39,13 +38,21 @@
 
   <div class="cfg-shell">
     <div class="cfg-widget-head">
-      <span class="cfg-dot" aria-hidden="true"></span>
+      <span class="cfg-dot"></span>
       <span>Chiptuning-Berechnungstool (Widget)</span>
     </div>
 
-    <!-- WICHTIG: Wrapper + Tool Container -->
-    <div class="ecu-widget">
-      <div id="ecuCalculateTool"></div>
+    <!-- iFrame Wrapper (so wird nichts abgeschnitten + Mobile passt) -->
+    <div class="ecu-iframe-wrap">
+      <iframe
+        id="ecuFrame"
+        class="ecu-iframe"
+        src="ecu-widget.html"
+        title="Chiptuning-Berechnungstool"
+        loading="lazy"
+        scrolling="no"
+        referrerpolicy="no-referrer"
+      ></iframe>
     </div>
   </div>
 </main>
@@ -64,26 +71,31 @@
   </div>
 </footer>
 
-<!-- ECU TOOL SCRIPT -->
 <script>
-  // Empfehlung: width NICHT "100%" (das macht bei manchen Widgets Chaos),
-  // sondern ein "Basis-Layout" und wir machen den Rest per CSS responsiv.
-  window.$ecu = {
-    lang: "de",
-    width: "1100",
-    BackgroundColor: "#000000",
-    BoxColor: "#960000",
-    FontColor: "#ffffff",
-    ButtonColor: "#960000",
-    ButtonFontColor: "#ffffff",
-    APIID: "" // falls du später einen Key bekommst
-  };
-
+  // iFrame Auto-Height (kein Abschneiden, Diagramm bleibt sichtbar)
   (function () {
-    const s = document.createElement("script");
-    s.src = "https://xremover.net/calculator/ecuob.js?_=" + Date.now();
-    s.async = true;
-    document.body.appendChild(s);
+    const frame = document.getElementById("ecuFrame");
+    if (!frame) return;
+
+    function setHeight(h) {
+      const n = Number(h);
+      if (!Number.isFinite(n) || n < 200) return;
+      frame.style.height = Math.ceil(n) + "px";
+    }
+
+    window.addEventListener("message", (ev) => {
+      // Wir akzeptieren nur Messages von der eigenen Seite (GitHub Pages Domain)
+      // -> trotzdem robust: wir checken nur die Form der Daten
+      const data = ev.data;
+      if (!data || data.type !== "ECU_WIDGET_HEIGHT") return;
+      setHeight(data.height);
+    });
+
+    // Fallback: falls Message spät kommt
+    frame.addEventListener("load", () => {
+      // Mindesthöhe, bis erstes Resize kommt
+      frame.style.height = frame.style.height || "900px";
+    });
   })();
 </script>
 

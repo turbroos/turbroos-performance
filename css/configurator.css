@@ -386,3 +386,52 @@
 .ecu-widget > div{
   max-width: 100% !important;
 }
+/* =========================================
+   ECU TOOL DARK MODE FIX
+   ========================================= */
+
+/* HP & TORQUE Labels dunkler / besser lesbar */
+#ecuCalculateTool .hp,
+#ecuCalculateTool .torque,
+#ecuCalculateTool .label,
+#ecuCalculateTool strong {
+  color: #ffffff !important;
+}
+
+/* Zahlenfelder besserer Kontrast */
+#ecuCalculateTool input,
+#ecuCalculateTool .value,
+#ecuCalculateTool .result,
+#ecuCalculateTool .standard,
+#ecuCalculateTool .stage1,
+#ecuCalculateTool .difference {
+  color: #ffffff !important;
+  background-color: #111111 !important;
+  border: 1px solid #960000 !important;
+}
+
+/* Zusatzoptionen Text besser sichtbar */
+#ecuCalculateTool .option,
+#ecuCalculateTool .option span,
+#ecuCalculateTool .option-title,
+#ecuCalculateTool p,
+#ecuCalculateTool small {
+  color: #e6e6e6 !important;
+}
+
+/* Graue Boxen dunkler */
+#ecuCalculateTool .box,
+#ecuCalculateTool .card,
+#ecuCalculateTool .item {
+  background-color: #151515 !important;
+}
+
+/* Icons Bereich etwas sauberer */
+#ecuCalculateTool svg {
+  filter: brightness(1.1);
+}
+
+/* Mobile Abstand */
+#ecuCalculateTool {
+  padding-bottom: 20px;
+}

@@ -434,3 +434,67 @@
     margin-top: 6px !important;
   }
 }
+
+/* =========================================================
+   XRemover ECU Widget – RESPONSIVE FIX (ohne Layout zu zerstören)
+   ========================================================= */
+
+/* Widget sitzt sauber in deinem Design */
+.ecu-widget{
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Verhindert, dass das Widget die Seite sprengt */
+.ecu-widget *{
+  box-sizing: border-box;
+}
+
+/* Mobile: nicht abschneiden -> horizontal scrollen IN DER BOX */
+@media (max-width: 820px){
+  .ecu-widget{
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px; /* damit Scrollbar nicht stört */
+  }
+
+  /* Wir geben dem Widget eine Mindestbreite,
+     damit Safari nicht "komisch" umbrechen will. */
+  .ecu-widget > :first-child{
+    min-width: 980px;      /* Desktop-Breite vom Widget */
+    display: inline-block; /* wichtig für overflow-x */
+  }
+}
+
+/* =========================================================
+   Eigenes Leistungsdiagramm (unter dem Widget)
+   ========================================================= */
+.tp-chart-card{
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(0,0,0,0.42);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.tp-chart-title{
+  font-weight: 950;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 10px;
+}
+
+.tp-chart-wrap{
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+#tpPerfChart{
+  width: 100%;
+  height: auto;
+  display: block;
+}

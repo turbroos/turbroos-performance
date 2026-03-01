@@ -680,4 +680,36 @@ main {
 .nav a {
   text-align: left !important;
 }
+/* =========================================================
+   GLOBALER FIX – HEADER NICHT VOM SEITENLAYOUT ZENTRIEREN
+   ========================================================= */
+
+/* Header immer links/rechts ausrichten */
+.site-header,
+.header-inner,
+.nav {
+  text-align: left !important;
+}
+
+.header-inner {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+/* Navigation immer links starten */
+.nav {
+  display: flex !important;
+  justify-content: flex-start !important;
+  gap: 26px !important;
+}
+
+/* WICHTIG: Konfigurator darf NICHT den Header zentrieren */
+.page-configurator .site-header,
+.page-configurator .header-inner,
+.page-configurator .nav {
+  text-align: left !important;
+  justify-content: space-between !important;
+}
+
 

@@ -489,3 +489,25 @@ main {
     max-width: none !important;
   }
 }
+
+/* ================= HERO – ZENTRIERT (FINAL) ================= */
+
+.hero-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.hero-offer {
+  margin-left: auto;
+  margin-right: auto;
+}

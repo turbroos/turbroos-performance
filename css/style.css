@@ -511,3 +511,92 @@ main {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* =========================================================
+   HERO – ANGEBOTSBOX (ZENTRIERT + MOBILE FIX)
+   ========================================================= */
+
+.hero-offer {
+  margin-top: 32px;
+  max-width: 760px;
+  padding: 22px 26px;
+  border-radius: 18px;
+  background: rgba(150,0,0,0.18);
+  border: 1px solid rgba(150,0,0,0.45);
+  box-shadow: 0 0 60px rgba(150,0,0,0.35);
+  backdrop-filter: blur(6px);
+  text-align: center;                 /* <<< WICHTIG: kompletter Inhalt zentriert */
+}
+
+.hero-offer-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(150,0,0,0.35);
+  border: 1px solid rgba(150,0,0,0.55);
+  color: #fff;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+}
+
+.hero-offer-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;                /* <<< WICHTIG: jede Zeile mittig */
+}
+
+.hero-offer-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;            /* <<< WICHTIG: Preise + Titel mittig */
+  align-items: baseline;
+  width: 100%;
+}
+
+.hero-offer-title {
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.hero-price.hot {
+  font-weight: 900;
+  color: #fff;
+  background: rgba(150,0,0,0.55);
+  border: 1px solid rgba(150,0,0,0.75);
+  padding: 3px 10px;
+  border-radius: 8px;
+}
+
+.hero-price.old {
+  color: rgba(255,255,255,0.55);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(150,0,0,0.85);
+}
+
+.hero-offer-valid {
+  margin-top: 14px;
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* MOBILE FIX: Preise nicht mehr unten links verloren */
+@media (max-width: 560px) {
+  .hero-offer-line {
+    flex-direction: column;           /* <<< Preise untereinander */
+    gap: 6px;
+  }
+
+  .hero-price.hot,
+  .hero-price.old {
+    display: inline-block;
+    margin: 0 auto;                   /* <<< Preise mittig */
+  }
+}

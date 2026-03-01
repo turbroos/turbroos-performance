@@ -664,3 +664,20 @@ main {
   }
 }
 
+/* =========================================================
+   GLOBALER FIX – NAVIGATION NICHT ZENTRIEREN
+   ========================================================= */
+
+.header-inner {
+  justify-content: space-between !important;
+}
+
+.nav {
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+
+.nav a {
+  text-align: left !important;
+}
+

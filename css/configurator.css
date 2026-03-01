@@ -176,10 +176,10 @@
 }
 
 /* =========================================
-   Home – Sonderangebot Box (unter den Buttons)
+   Home – Sonderangebot (unter Buttons)
    ========================================= */
 
-.hero-offer{
+.hero .hero-offer{
   margin-top: 14px;
   max-width: 720px;
   padding: 14px 16px;
@@ -190,10 +190,9 @@
   backdrop-filter: blur(6px);
 }
 
-.hero-offer-badge{
+.hero .hero-offer-badge{
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   padding: 6px 10px;
   border-radius: 999px;
   background: rgba(150,0,0,0.22);
@@ -202,44 +201,66 @@
   font-weight: 800;
   font-size: 12px;
   letter-spacing: .2px;
-  margin-bottom: 8px;
-}
-
-.hero-offer-text{
-  margin: 0;
-  color: rgba(255,255,255,0.85);
-  font-size: 14px;          /* kleiner als normal */
-  line-height: 1.45;
-  text-transform: lowercase; /* wie von dir gewünscht */
-}
-
-.hero-offer-text strong{
-  color: rgba(255,255,255,0.95);
-  font-weight: 900;
-}
-
-.hero-offer-sep{
-  display: inline-block;
-  margin: 4px 0;
-  color: rgba(255,255,255,0.65);
-  font-weight: 800;
-}
-
-.hero-offer-valid{
-  margin: 10px 0 0;
-  color: rgba(255,255,255,0.65);
-  font-size: 12.5px;        /* noch kleiner */
+  margin-bottom: 10px;
   text-transform: lowercase;
 }
 
-/* Mobile Feinschliff */
+.hero .hero-offer-lines{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: rgba(255,255,255,0.86);
+  font-size: 14px;
+  line-height: 1.45;
+  text-transform: lowercase; /* wie gewünscht */
+}
+
+.hero .hero-offer-line{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.hero .hero-offer-sep{
+  color: rgba(255,255,255,0.60);
+  font-weight: 900;
+  margin: 2px 0;
+}
+
+.hero .hero-price{
+  font-weight: 950;
+  letter-spacing: .2px;
+}
+
+.hero .hero-price.hot{
+  color: #ffffff;
+  background: rgba(150,0,0,0.35);
+  border: 1px solid rgba(150,0,0,0.45);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.hero .hero-price.old{
+  color: rgba(255,255,255,0.60);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(150,0,0,0.85);
+}
+
+.hero .hero-offer-valid{
+  margin-top: 10px;
+  color: rgba(255,255,255,0.62);
+  font-size: 12.5px;
+  text-transform: lowercase;
+}
+
+/* Mobile */
 @media (max-width: 560px){
-  .hero-offer{
+  .hero .hero-offer{
     padding: 12px 14px;
     border-radius: 14px;
   }
-  .hero-offer-text{ font-size: 13.5px; }
-  .hero-offer-valid{ font-size: 12px; }
+  .hero .hero-offer-lines{ font-size: 13.5px; }
+  .hero .hero-offer-valid{ font-size: 12px; }
 }
-
-

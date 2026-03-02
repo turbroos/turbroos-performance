@@ -3,24 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XRemover</title>
+    <title>XRemover Widget</title>
 </head>
 <body>
-    <script src="path/to/xremover.js"></script>
+    <div id="xremover-widget"></div>
     <script>
-        // Function to load the XRemover widget
-        function loadXRemover() {
-            const widget = document.createElement('div');
-            widget.id = 'xremover-widget';
-            widget.style.height = window.innerHeight + 'px'; // Adjust height
-            document.body.appendChild(widget);
-
-            // Instantiate XRemover widget
-            XRemover.init(widget);
-        }
-
-        // Load the widget directly without loading state
-        window.onload = loadXRemover;
+        (function(d) {
+            var widget = d.createElement('script');
+            widget.src = 'https://example.com/xremover-widget.js'; // Replace with actual widget URL
+            widget.async = true;
+            d.getElementsByTagName('head')[0].appendChild(widget);
+        })(document);
     </script>
 </body>
 </html>

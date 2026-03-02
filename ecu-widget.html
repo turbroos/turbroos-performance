@@ -2,10 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-
-  <!-- Desktop-Ansicht erzwingen, damit das Leistungsdiagramm IMMER angezeigt wird -->
-  <meta name="viewport" content="width=1200, initial-scale=0.35" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ECU Widget</title>
 
   <style>
@@ -45,7 +42,7 @@
       FontColor: "#fff8f8",
       ButtonColor: "#960000",
       ButtonFontColor: "#ffffff",
-      APIID: ""   // Falls du eine API-ID hast → hier eintragen
+      APIID: ""
     };
 
     // Externes Script laden
@@ -88,4 +85,10 @@
       const resizeObserver = new ResizeObserver(() => sendHeightUpdate());
       resizeObserver.observe(document.documentElement);
 
-      window.addEventListener("load", sendHeight
+      window.addEventListener("load", sendHeightUpdate);
+      document.addEventListener("DOMContentLoaded", sendHeightUpdate);
+    })();
+  </script>
+
+</body>
+</html>

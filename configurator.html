@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="css/configurator.css" />
 </head>
 
+<body>
+
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html">
@@ -23,7 +25,6 @@
     </nav>
   </div>
 </header>
-
 
 <main class="container section config-page">
   <h1 class="page-title">Fahrzeug-Konfigurator</h1>
@@ -46,13 +47,13 @@
         loading="lazy"
         scrolling="no"
         referrerpolicy="no-referrer"
-        sandbox="allow-scripts allow-same-origin"
+        style="width:100%; border:0;"
       ></iframe>
     </div>
   </div>
 </main>
 
-  <a href="https://wa.me/4915255755914" class="whatsapp" target="_blank" rel="noopener" data-lang="whatsapp_btn">
+<a href="https://wa.me/4915255755914" class="whatsapp" target="_blank" rel="noopener" data-lang="whatsapp_btn">
   WhatsApp
 </a>
 
@@ -71,56 +72,41 @@
 </footer>
 
 <script>
-  (function () {
-    const frame = document.getElementById("ecuFrame");
-    if (!frame) return;
+(function () {
+  const frame = document.getElementById("ecuFrame");
+  if (!frame) return;
 
-    frame.style.height = "1200px";
-    frame.style.minHeight = "1200px";
+  // Start-Höhe
+  frame.style.height = "1200px";
 
-    function setHeight(h) {
-      const n = Number(h);
-      if (!Number.isFinite(n) || n < 400) {
-        console.warn("Invalid height received:", h);
-        return;
-      }
-      console.log("Setting iframe height to:", n);
-      frame.style.height = Math.ceil(n) + "px";
-    }
+  function setHeight(h) {
+    const n = Number(h);
+    if (!Number.isFinite(n) || n < 400) return;
+    frame.style.height = Math.ceil(n) + "px";
+  }
 
-    window.addEventListener("message", (ev) => {
-      const data = ev.data;
-      if (!data || data.type !== "ECU_WIDGET_HEIGHT") return;
-      
-      console.log("Received height message:", data);
-      setHeight(data.height);
-    }, false);
+  // Nachrichten vom Widget empfangen
+  window.addEventListener("message", (ev) => {
+    const data = ev.data;
+    if (!data || data.type !== "ECU_WIDGET_HEIGHT") return;
+    setHeight(data.height);
+  });
 
-    frame.addEventListener("load", () => {
-      console.log("iFrame loaded");
-      
-      try {
-        setTimeout(() => {
-          const iframeDoc = frame.contentDocument || frame.contentWindow.document;
-          if (iframeDoc) {
-            const h = iframeDoc.documentElement.scrollHeight;
-            console.log("Direct height check:", h);
-            if (h > 400) {
-              frame.style.height = h + "px";
-            }
-          }
-        }, 1000);
-      } catch (e) {
-        console.log("Cannot access iframe content (expected due to sandbox)");
-      }
-    });
-
+  // Fallback falls keine Höhe gesendet wird
+  frame.addEventListener("load", () => {
     setTimeout(() => {
-      if (frame.style.height === "1200px") {
-        console.log("No height update received, keeping default height");
+      try {
+        const iframeDoc = frame.contentDocument || frame.contentWindow.document;
+        if (iframeDoc) {
+          const h = iframeDoc.documentElement.scrollHeight;
+          if (h > 400) frame.style.height = h + "px";
+        }
+      } catch (e) {
+        // Zugriff blockiert → normal
       }
-    }, 3000);
-  })();
+    }, 1000);
+  });
+})();
 </script>
 
 </body>

@@ -5,34 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ECU Widget</title>
 
-<style>
-  html, body{
-    margin: 0;
-    padding: 0;
-    background: #000000;
-  }
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
 
-  #ecuCalculateTool{
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    background: #000000;
-  }
+    #ecuCalculateTool {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #000000;
+    }
 
-  #ecuCalculateTool > div{
-    background: #000000 !important;
-  }
-
-  #ecuCalculateTool{
-    color: #ffffff;
-  }
-</style>
+    #ecuCalculateTool > div {
+      background: #000000 !important;
+    }
+  </style>
 </head>
+
 <body>
 
   <div id="ecuCalculateTool"></div>
 
   <script>
+    // Widget-Konfiguration
     window.$ecu = {
       lang: "de",
       width: "100%",
@@ -41,38 +42,51 @@
       FontColor: "#fff8f8",
       ButtonColor: "#960000",
       ButtonFontColor: "#ffffff",
-      APIID: ""
+      APIID: ""   // Falls du eine API-ID hast → hier eintragen
     };
 
-    (function() {
-      const d = document;
-      const s = d.createElement("script");
-      s.src = "https://xremover.net/calculator/ecuob.js?_=" + Date.now();
-      s.async = true;
-      d.body.appendChild(s);
+    // Externes Script laden
+    (function () {
+      const script = document.createElement("script");
+      script.src = "https://xremover.net/calculator/ecuob.js?_=" + Date.now();
+      script.async = true;
+
+      script.onerror = () => {
+        console.error("ECU Widget Script konnte nicht geladen werden.");
+        sendHeightUpdate();
+      };
+
+      document.body.appendChild(script);
     })();
 
-    (function () {
-      function postHeight() {
-        const h = Math.max(
-          document.body.scrollHeight,
-          document.documentElement.scrollHeight
-        );
-        window.parent.postMessage({ type: "ECU_WIDGET_HEIGHT", height: h }, "*");
-      }
+    // Höhe an Parent melden
+    function sendHeightUpdate() {
+      const height = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
 
-      let tries = 0;
-      const t = setInterval(() => {
-        postHeight();
-        tries++;
-        if (tries > 40) clearInterval(t);
+      window.parent.postMessage(
+        { type: "ECU_WIDGET_HEIGHT", height: height },
+        "*"
+      );
+    }
+
+    // Regelmäßige Updates nach dem Laden
+    (function () {
+      let attempts = 0;
+
+      const interval = setInterval(() => {
+        sendHeightUpdate();
+        attempts++;
+        if (attempts > 40) clearInterval(interval);
       }, 250);
 
-      const ro = new ResizeObserver(() => postHeight());
-      ro.observe(document.documentElement);
+      const resizeObserver = new ResizeObserver(() => sendHeightUpdate());
+      resizeObserver.observe(document.documentElement);
 
-      window.addEventListener("load", postHeight);
-      document.addEventListener("DOMContentLoaded", postHeight);
+      window.addEventListener("load", sendHeightUpdate);
+      document.addEventListener("DOMContentLoaded", sendHeightUpdate);
     })();
   </script>
 

@@ -1,19 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XRemover Widget</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECU Widget</title>
+
+<style>
+  html, body{
+    margin: 0;
+    padding: 0;
+    background: #000000;
+  }
+
+  #ecuCalculateTool{
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #000000;
+  }
+
+  #ecuCalculateTool > div{
+    background: #000000 !important;
+  }
+
+  #ecuCalculateTool{
+    color: #ffffff;
+  }
+</style>
 </head>
 <body>
-    <div id="xremover-widget"></div>
-    <script>
-        (function(d) {
-            var widget = d.createElement('script');
-            widget.src = 'https://example.com/xremover-widget.js'; // Replace with actual widget URL
-            widget.async = true;
-            d.getElementsByTagName('head')[0].appendChild(widget);
-        })(document);
-    </script>
+
+  <div id="ecuCalculateTool"></div>
+
+  <script>
+    window.$ecu = {
+      lang: "de",
+      width: "100%",
+      BackgroundColor: "#000000",
+      BoxColor: "#960000",
+      FontColor: "#fff8f8",
+      ButtonColor: "#960000",
+      ButtonFontColor: "#ffffff",
+      APIID: ""
+    };
+
+    (function() {
+      const d = document;
+      const s = d.createElement("script");
+      s.src = "https://xremover.net/calculator/ecuob.js?_=" + Date.now();
+      s.async = true;
+      d.body.appendChild(s);
+    })();
+
+    (function () {
+      function postHeight() {
+        const h = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight
+        );
+        window.parent.postMessage({ type: "ECU_WIDGET_HEIGHT", height: h }, "*");
+      }
+
+      let tries = 0;
+      const t = setInterval(() => {
+        postHeight();
+        tries++;
+        if (tries > 40) clearInterval(t);
+      }, 250);
+
+      const ro = new ResizeObserver(() => postHeight());
+      ro.observe(document.documentElement);
+
+      window.addEventListener("load", postHeight);
+      document.addEventListener("DOMContentLoaded", postHeight);
+    })();
+  </script>
+
 </body>
 </html>

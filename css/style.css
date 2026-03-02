@@ -713,3 +713,34 @@ main {
 }
 
 
+/* =========================================================
+   FIX – Leistungsdiagramm wieder sichtbar machen
+   ========================================================= */
+
+#ecuCalculateTool canvas {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#ecuCalculateTool .chart,
+#ecuCalculateTool [class*="chart"],
+#ecuCalculateTool [id*="chart"] {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* =========================================================
+   FIX – Widget darf nicht gequetscht werden
+   ========================================================= */
+
+#ecuCalculateTool {
+  width: 100% !important;
+  max-width: 1100px !important;
+  overflow: visible !important;
+}
+
+#ecuCalculateTool canvas {
+  max-width: 100% !important;
+}

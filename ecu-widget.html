@@ -2,7 +2,10 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Desktop-Ansicht erzwingen, damit das Leistungsdiagramm IMMER angezeigt wird -->
+  <meta name="viewport" content="width=1200, initial-scale=0.35" />
+
   <title>ECU Widget</title>
 
   <style>
@@ -85,10 +88,4 @@
       const resizeObserver = new ResizeObserver(() => sendHeightUpdate());
       resizeObserver.observe(document.documentElement);
 
-      window.addEventListener("load", sendHeightUpdate);
-      document.addEventListener("DOMContentLoaded", sendHeightUpdate);
-    })();
-  </script>
-
-</body>
-</html>
+      window.addEventListener("load", sendHeight

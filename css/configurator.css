@@ -342,19 +342,3 @@ main.container.config-page,
   .config-page .readable {
     text-align: center !important;
   }
-}
-/* Wasserzeichen hinter dem Leistungsdiagramm */
-.ecu-iframe-wrap {
-  position: relative;
-  background-image: url('/img/logo.png'); /* dein Logo */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 45%; /* Größe anpassen */
-  opacity: 0.12; /* Transparenz des Wasserzeichens */
-}
-
-@media (max-width: 820px) {
-  .ecu-iframe-wrap {
-    background-image: none !important;
-  }
-}

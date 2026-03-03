@@ -264,3 +264,16 @@
   .hero .hero-offer-lines{ font-size: 13.5px; }
   .hero .hero-offer-valid{ font-size: 12px; }
 }
+/* ECU Widget breiter machen (Desktop) */
+#ecuCalculateTool {
+  width: 100%;
+  max-width: 1400px; /* vorher 1100px */
+  margin: 0 auto;
+}
+
+/* Optional: noch breiter auf sehr großen Monitoren */
+@media (min-width: 1800px) {
+  #ecuCalculateTool {
+    max-width: 1600px;
+  }
+}

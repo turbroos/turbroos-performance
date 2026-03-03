@@ -278,3 +278,22 @@
   max-width: 1500px !important;
   margin: 0 auto !important;
 }
+/* --- Container auf der Konfigurator-Seite breiter machen --- */
+.config-page.container,
+.container.config-page {
+  max-width: 1500px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Der graue Rahmen */
+.cfg-shell {
+  max-width: 1500px !important;
+  margin: 0 auto !important;
+}
+
+/* Der Rahmen direkt um das iFrame */
+.ecu-iframe-wrap {
+  max-width: 1500px !important;
+  margin: 0 auto !important;
+}

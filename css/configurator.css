@@ -320,3 +320,7 @@
   margin-left: auto !important;
   margin-right: auto !important;
 }
+/* --- Textblock auf der Konfigurator-Seite zentrieren --- */
+main.container.config-page {
+  text-align: center !important;
+}

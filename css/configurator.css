@@ -265,17 +265,24 @@
   .hero .hero-offer-valid{ font-size: 12px; }
 }
 
-/* ECU Widget breiter machen (Desktop) */
-#ecuCalculateTool {
-  width: 100%;
+/* --- ECU Widget Desktop Breite fixen --- */
+
+/* Der äußere Kasten */
+.cfg-shell {
   max-width: 1500px;
   margin: 0 auto;
 }
 
-/* Inneren Widget-Container überschreiben (wichtig!) */
-#ecuCalculateTool > div {
-  max-width: 1500px !important;
-  width: 100% !important;
-  margin: 0 auto !important;
+/* Der Rahmen um das iFrame */
+.ecu-iframe-wrap {
+  max-width: 1500px;
+  margin: 0 auto;
 }
+
+/* Das iFrame selbst */
+.ecu-iframe {
+  max-width: 1500px;
+  width: 100% !important;
+}
+
 

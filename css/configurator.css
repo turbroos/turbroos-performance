@@ -312,3 +312,11 @@
   border: none !important;
   box-shadow: none !important;
 }
+/* --- Überschrift + Untertitel + Widget-Titel zentrieren --- */
+.config-page .page-title,
+.config-page .readable,
+.cfg-widget-head {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}

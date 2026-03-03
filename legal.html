@@ -7,17 +7,44 @@
   <link rel="stylesheet" href="css/style.css" />
 
   <style>
-    /* Roter Hinweis-Kasten */
-    .legal-warning {
-      background: #ffe5e5;
-      border-left: 4px solid #d9534f;
-      padding: 16px 20px;
-      border-radius: 6px;
+    /* Hinweis-Kasten im Stil des Frühlingsangebots */
+    .legal-offer-box {
+      background: #fff4f4;
+      border: 1px solid #ffcccc;
+      padding: 22px;
+      border-radius: 12px;
       margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeSlideIn 0.8s ease-out forwards;
     }
-    .legal-warning h2 {
-      margin-top: 0;
-      color: #b52b27;
+
+    .legal-offer-badge {
+      display: inline-block;
+      background: #ff6b6b;
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .legal-offer-box p {
+      margin: 8px 0;
+      line-height: 1.55;
+    }
+
+    /* Einblend-Animation */
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -48,20 +75,23 @@
 
   <hr class="rule" />
 
-  <!-- Roter Hinweis-Kasten -->
-  <div class="legal-warning">
-    <h2>Wichtiger Hinweis zu Leistungssteigerungen</h2>
+  <!-- HINWEIS-KASTEN IM ANGEBOTSSTIL -->
+  <div class="legal-offer-box">
+    <div class="legal-offer-badge">WICHTIGER HINWEIS</div>
+
     <p>
       Leistungssteigerungen, Softwareoptimierungen und Änderungen an Motor- oder Abgasparametern
       dürfen in Deutschland nur im Rahmen der gesetzlichen Bestimmungen verwendet werden.
       Ohne eine entsprechende Eintragung oder Abnahme durch eine technische Prüforganisation
       (z. B. TÜV oder DEKRA) kann die Betriebserlaubnis des Fahrzeugs erlöschen.
     </p>
+
     <p>
       Nicht eingetragene Leistungssteigerungen dürfen <strong>nicht im öffentlichen Straßenverkehr</strong>
       genutzt werden. Sie sind ausschließlich für Motorsport-, Rennsport- oder Showzwecke
       auf abgesperrten Strecken vorgesehen.
     </p>
+
     <p>
       Der Fahrzeughalter ist selbst dafür verantwortlich, alle gesetzlichen Vorgaben einzuhalten
       und sicherzustellen, dass das Fahrzeug im öffentlichen Straßenverkehr ordnungsgemäß betrieben

@@ -297,3 +297,18 @@
   max-width: 1500px !important;
   margin: 0 auto !important;
 }
+/* --- Grauen Rahmen komplett entfernen --- */
+
+/* Äußerer Kasten */
+.cfg-shell {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Rahmen direkt um das iFrame */
+.ecu-iframe-wrap {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}

@@ -324,3 +324,22 @@
 main.container.config-page {
   text-align: center !important;
 }
+
+/* Chiptuning-Berechnungstool komplett entfernen */
+.cfg-widget-head {
+  display: none !important;
+}
+/* Gesamten Textblock zentrieren */
+main.container.config-page,
+.config-page .page-title,
+.config-page .readable {
+  text-align: center !important;
+}
+
+@media (max-width: 820px) {
+  main.container.config-page,
+  .config-page .page-title,
+  .config-page .readable {
+    text-align: center !important;
+  }
+}

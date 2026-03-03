@@ -5,6 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>turbroos performance</title>
   <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* WhatsApp Button im Angebot */
+    .whatsapp-offer-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+      background-color: #25D366;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .whatsapp-offer-btn:hover {
+      background-color: #1ebe5d;
+    }
+
+    .whatsapp-offer-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: white;
+    }
+  </style>
 </head>
 
 <header class="site-header">
@@ -22,9 +49,8 @@
   </div>
 </header>
 
-
 <main>
-<!-- ================= HERO (ZENTRIERT, FINAL) ================= -->
+<!-- ================= HERO ================= -->
 <section class="hero">
   <div class="hero-content container">
 
@@ -61,6 +87,22 @@
       </div>
 
       <p class="hero-offer-valid">ANGEBOT GÜLTIG BIS 30.04.2026</p>
+
+      <!-- NEUER WHATSAPP BUTTON -->
+      <a href="https://wa.me/4915255755914?text=Ich%20habe%20eine%20Frage%20zum%20Frühlingsangebot"
+         class="whatsapp-offer-btn"
+         target="_blank"
+         rel="noopener">
+
+        <!-- WhatsApp Icon (SVG) -->
+        <svg viewBox="0 0 32 32">
+          <path d="M16.027 3C9.383 3 4 8.383 4 15.027c0 2.652.805 5.105 2.18 7.152L4 29l7.055-2.148A12.9 12.9 0 0 0 16.027 27C22.67 27 28 21.617 28 14.973 28 8.33 22.67 3 16.027 3zm0 22.727c-2.27 0-4.363-.742-6.055-1.992l-.43-.305-4.184 1.273 1.305-4.07-.28-.418A10.66 10.66 0 0 1 5.36 15c0-5.91 4.758-10.667 10.668-10.667 5.91 0 10.667 4.758 10.667 10.667 0 5.91-4.758 10.727-10.668 10.727zm5.863-7.98c-.32-.16-1.883-.93-2.176-1.035-.293-.105-.507-.16-.72.16-.213.32-.827 1.035-1.013 1.25-.187.213-.373.24-.693.08-.32-.16-1.35-.498-2.572-1.59-.95-.848-1.59-1.897-1.777-2.217-.187-.32-.02-.493.14-.653.144-.143.32-.373.48-.56.16-.187.213-.32.32-.533.107-.213.053-.4-.027-.56-.08-.16-.72-1.733-.987-2.373-.26-.627-.527-.54-.72-.55-.187-.013-.4-.013-.613-.013-.213 0-.56.08-.853.4-.293.32-1.12 1.094-1.12 2.667 0 1.573 1.147 3.093 1.307 3.307.16.213 2.254 3.44 5.467 4.813.76.327 1.353.52 1.813.667.76.24 1.453.207 2 .127.613-.093 1.883-.773 2.147-1.52.267-.747.267-1.387.187-1.52-.08-.133-.293-.213-.613-.373z"/>
+        </svg>
+
+        JETZT ANFRAGEN
+      </a>
+      <!-- ENDE WHATSAPP BUTTON -->
+
     </div>
 
   </div>
@@ -71,10 +113,6 @@
   </div>
 </section>
 </main>
-
-<a href="https://wa.me/4915255755914" class="whatsapp" target="_blank" rel="noopener" data-lang="whatsapp_btn">
-  WhatsApp
-</a>
 
 <footer class="footer">
   <div class="container footer-inner">
@@ -93,8 +131,3 @@
 <script src="js/lang.js"></script>
 </body>
 </html>
-
-
-
-
-

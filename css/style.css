@@ -890,3 +890,43 @@ main {
   }
 }
 
+/* RUCKELFREIER ENDLOS-SLIDER */
+.thin-review-slider {
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.thin-slider-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 25s linear infinite;
+}
+
+.thin-slider-content {
+  display: flex;
+}
+
+.thin-slide {
+  padding: 0 40px;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* Animation */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* MOBILE: schneller + kleinere Schrift */
+@media (max-width: 600px) {
+  .thin-slide {
+    font-size: 13px;
+    padding: 0 25px;
+  }
+
+  .thin-slider-track {
+    animation-duration: 16s !important;
+  }
+}

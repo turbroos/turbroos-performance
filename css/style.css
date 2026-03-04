@@ -850,7 +850,7 @@ main {
 /* MOBILE ANPASSUNG */
 @media (max-width: 600px) {
   .thin-review-title {
-    font-size: 16px; /* kleiner */
+    font-size: 14px; /* kleiner */
     color: #aaa;     /* noch heller */
     margin-top: 40px;
   }
@@ -860,3 +860,4 @@ main {
     animation-duration: 20s !important;
   }
 }
+

@@ -967,4 +967,14 @@ main {
   }
 }
 
+/* SLIDER WIRKLICH LANGSAMER MACHEN */
+.thin-slider-track {
+  animation: scroll 60s linear infinite !important; /* Desktop */
+}
+
+@media (max-width: 600px) {
+  .thin-slider-track {
+    animation: scroll 45s linear infinite !important; /* Mobile */
+  }
+}
 

@@ -807,3 +807,54 @@ main {
 .slider-buttons button:hover {
     background: #e6b800;
 }
+/* ===================== TESTIMONIAL SLIDER ===================== */
+
+.testimonial-slider {
+    width: 100%;
+    max-width: 900px;
+    margin: 60px auto;
+    text-align: center;
+}
+
+.testimonial-title {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #ffcc00;
+    font-weight: 700;
+}
+
+.testimonial-track {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.testimonial {
+    min-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.6s ease;
+}
+
+.testimonial.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.testimonial p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.testimonial span {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.stars {
+    color: #ffcc00;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}

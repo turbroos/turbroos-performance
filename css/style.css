@@ -928,4 +928,42 @@ main {
     animation-duration: 25s !important;
   }
 }
+/* RUCKELFREIER ENDLOS-SLIDER – LANGSAMER GEMACHT */
+.thin-review-slider {
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+.thin-slider-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 40s linear infinite; /* DESKTOP LANGSAMER */
+  white-space: nowrap;
+}
+
+.thin-slide {
+  display: inline-block;
+  padding: 0 40px;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* Animation */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* MOBILE LANGSAMER */
+@media (max-width: 600px) {
+  .thin-slide {
+    font-size: 13px;
+    padding: 0 25px;
+  }
+
+  .thin-slider-track {
+    animation-duration: 32s !important; /* MOBILE LANGSAMER */
+  }
+}
 

@@ -860,4 +860,33 @@ main {
     animation-duration: 20s !important;
   }
 }
+/* ENDLOS-SLIDER FIX */
+.thin-review-slider {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.thin-slider-track {
+  display: inline-flex;
+  animation: slide 25s linear infinite;
+}
+
+.thin-slide {
+  padding: 0 40px;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* Animation */
+@keyframes slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* MOBILE: schneller */
+@media (max-width: 600px) {
+  .thin-slider-track {
+    animation-duration: 18s !important;
+  }
+}
 

@@ -857,7 +857,7 @@ main {
 
   /* Slider schneller */
   .thin-slider-track {
-    animation-duration: 20s !important;
+    animation-duration: 25s !important;
   }
 }
 /* ENDLOS-SLIDER FIX */
@@ -925,6 +925,7 @@ main {
   }
 
   .thin-slider-track {
-    animation-duration: 16s !important;
+    animation-duration: 25s !important;
   }
 }
+

@@ -836,3 +836,27 @@ main {
     0% { transform: translateX(0); }
     100% { transform: translateX(-100%); }
 }
+/* Titel über dem dünnen Slider */
+.thin-review-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 60px;
+  margin-bottom: 10px;
+  color: #888; /* heller */
+  letter-spacing: 0.5px;
+}
+
+/* MOBILE ANPASSUNG */
+@media (max-width: 600px) {
+  .thin-review-title {
+    font-size: 16px; /* kleiner */
+    color: #aaa;     /* noch heller */
+    margin-top: 40px;
+  }
+
+  /* Slider schneller */
+  .thin-slider-track {
+    animation-duration: 20s !important;
+  }
+}

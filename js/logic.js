@@ -1,15 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
+    const testimonials = document.querySelectorAll(".testimonial");
+    let index = 0;
 
-    function changeSlide(direction) {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + direction + slides.length) % slides.length;
-        slides[currentSlide].classList.add('active');
+    function showSlide(i) {
+        testimonials.forEach(t => t.classList.remove("active"));
+        testimonials[i].classList.add("active");
     }
 
-    nextBtn.addEventListener('click', () => changeSlide(1));
-    prevBtn.addEventListener('click', () => changeSlide(-1));
+    showSlide(index);
+
+    setInterval(() => {
+        index = (index + 1) % testimonials.length;
+        showSlide(index);
+    }, 4000); // alle 4 Sekunden wechseln
 });

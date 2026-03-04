@@ -938,7 +938,7 @@ main {
 .thin-slider-track {
   display: flex;
   width: max-content;
-  animation: scroll 40s linear infinite; /* DESKTOP LANGSAMER */
+  animation: scroll 50s linear infinite; /* DESKTOP LANGSAMER */
   white-space: nowrap;
 }
 
@@ -963,7 +963,8 @@ main {
   }
 
   .thin-slider-track {
-    animation-duration: 32s !important; /* MOBILE LANGSAMER */
+    animation-duration: 40s !important; /* MOBILE LANGSAMER */
   }
 }
+
 

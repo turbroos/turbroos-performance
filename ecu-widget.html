@@ -21,12 +21,6 @@
       margin: 0 auto;
       background: #000000;
     }
-
-    /* ❌ Dieser Block wurde entfernt:
-    #ecuCalculateTool > div {
-      background: #000000 !important;
-    }
-    */
   </style>
 </head>
 
@@ -43,12 +37,14 @@
       FontColor: "#fff8f8",
       ButtonColor: "#960000",
       ButtonFontColor: "#ffffff",
+      BorderRadius: "0px",
+      AutoHeight: true,
       APIID: ""
     };
 
     (function () {
       const script = document.createElement("script");
-      script.src = "https://xremover.net/calculator/ecuob.js?_=" + Date.now();
+      script.src = "https://xremover.net/calculator/ecuob.js";
       script.async = true;
       document.body.appendChild(script);
     })();

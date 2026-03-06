@@ -977,4 +977,12 @@ main {
     animation: scroll 45s linear infinite !important; /* Mobile */
   }
 }
+/* Mobile Fix für iPhone & kleine Geräte */
+@media (max-width: 768px) {
+  .ecu-iframe {
+    min-height: 2200px !important;
+    height: auto !important;
+  }
+}
+
 

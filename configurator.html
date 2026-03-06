@@ -110,7 +110,7 @@
   if (!frame) return;
 
   // Start-Höhe erhöhen
-  frame.style.height = "1800px";
+  frame.style.height = window.innerWidth < 768 ? "2200px" : "1800px";
 
   function setHeight(h) {
     const n = Number(h);

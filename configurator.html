@@ -63,22 +63,21 @@
     Wähle Marke, Modell, Baujahr und Motorisierung. Alle Werte sind unverbindliche Richtwerte.
   </p>
 
-    <div class="ecu-iframe-wrap">
-      <iframe
-        id="ecuFrame"
-        class="ecu-iframe"
-        src="ecu-widget.html"
-        title="Chiptuning-Berechnungstool"
-        loading="lazy"
-        scrolling="no"
-        referrerpolicy="no-referrer"
-        style="width:100%; border:0;"
-      ></iframe>
-    </div>
+  <div class="ecu-iframe-wrap">
+    <iframe
+      id="ecuFrame"
+      class="ecu-iframe"
+      src="ecu-widget.html"
+      title="Chiptuning-Berechnungstool"
+      loading="lazy"
+      scrolling="no"
+      referrerpolicy="no-referrer"
+      style="width:100%; border:0;"
+    ></iframe>
   </div>
 </main>
 
-<!-- NEUER WHATSAPP BUTTON UNTEN RECHTS -->
+<!-- WhatsApp Button -->
 <a href="https://wa.me/4915255755914?text=Ich%20habe%20eine%20Frage%20zum%20Konfigurator"
    class="whatsapp-fixed"
    target="_blank"
@@ -90,7 +89,6 @@
 
   JETZT ANFRAGEN
 </a>
-<!-- ENDE WHATSAPP BUTTON -->
 
 <footer class="footer">
   <div class="container footer-inner">
@@ -111,30 +109,37 @@
   const frame = document.getElementById("ecuFrame");
   if (!frame) return;
 
-  frame.style.height = "1200px";
+  // Start-Höhe erhöhen
+  frame.style.height = "1800px";
 
   function setHeight(h) {
     const n = Number(h);
-    if (!Number.isFinite(n) || n < 400) return;
-    frame.style.height = Math.ceil(n) + "px";
+    if (!Number.isFinite(n)) return;
+
+    const minHeight = 1600; // Mindesthöhe
+    const finalHeight = Math.max(n, minHeight);
+
+    frame.style.height = finalHeight + "px";
   }
 
+  // Nachrichten vom Widget empfangen
   window.addEventListener("message", (ev) => {
     const data = ev.data;
     if (!data || data.type !== "ECU_WIDGET_HEIGHT") return;
     setHeight(data.height);
   });
 
+  // Fallback falls keine Höhe gesendet wird
   frame.addEventListener("load", () => {
     setTimeout(() => {
       try {
         const iframeDoc = frame.contentDocument || frame.contentWindow.document;
         if (iframeDoc) {
-          const h = iframeDoc.documentElement.scrollHeight;
-          if (h > 400) frame.style.height = h + "px";
+          const h = iframeDoc.body.scrollHeight;
+          if (h > 400) setHeight(h);
         }
       } catch (e) {}
-    }, 1000);
+    }, 1500);
   });
 })();
 </script>
